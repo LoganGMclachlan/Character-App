@@ -1,0 +1,38 @@
+.Title{
+  float: left;
+  color: red;
+  margin-left:40px
+}
+
+.Header{
+  width:100%;
+  margin: 0px;
+  background-color: rgb(22, 22, 105);
+  height: 110px;
+}
+
+.UserSnippet{
+  float:right;
+  margin-right:40px
+}
+
+.Main{
+  width:100%;
+  margin: 0px;
+  height:517px
+}
+
+.CharacterList{
+  float:left;
+  width:20%;
+  padding-left:20px;
+  background-color: lightseagreen;
+  height:100%
+}
+
+.MainPanel{
+  margin-left: 20%;
+  background-color: lightgray;
+  width:80%;
+  height:100%
+}
