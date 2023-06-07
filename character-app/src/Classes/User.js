@@ -6,4 +6,8 @@ class User{
         this.password = password
         this.characters = new Array
     }
+
+    updateUsername(username){
+        this.username = username
+    }
 }

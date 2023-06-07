@@ -8,7 +8,7 @@ class Character{
         this.name = name
         this.totalLevel = 1
         this.race = 'human'
-        this.class = '1 fighter'
+        this.charClass = '1 fighter'
         this.background = 'unknown'
         this.maxHp = 0
         this.currentHp = 0
@@ -26,5 +26,31 @@ class Character{
         this.inventory = 'add your items here'
         this.features = 'add your features here'
         this.description = 'add a decrition here'
+    }
+
+    UpdateCharacter(name,totalLevel,race,charClass,background,maxHp,currentHp,tempHp,
+        armorClass,initiative,proficiencyBonus,speed,abilities,skills,savingThrows,
+        defences,proficiencies,attacks,inventory,features,description) {
+        this.name = name
+        this.totalLevel = totalLevel
+        this.race = race
+        this.charClass = charClass
+        this.background = background
+        this.maxHp = maxHp
+        this.currentHp = currentHp
+        this.tempHp = tempHp
+        this.armorClass = armorClass
+        this.initiative = initiative
+        this.proficiencyBonus = proficiencyBonus
+        this.speed = speed
+        this.abilities = abilities
+        this.skills = skills
+        this.savingThrows = savingThrows
+        this.defences = defences
+        this.proficiencies = proficiencies
+        this.attacks = attacks
+        this.inventory = inventory
+        this.features = features
+        this.description = description
     }
 }
