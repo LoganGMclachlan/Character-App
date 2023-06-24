@@ -3,7 +3,8 @@
   height: 80px;
   margin-top:-30px;
   background-color: red;
-  padding:15px
+  padding-top:15px;
+  padding-bottom:15px
 }
 
 .header-left{
@@ -13,6 +14,7 @@
 
 .header-right{
   float:right;
+  margin-top:10px;
   margin-right:20px;
   color:white
 }
