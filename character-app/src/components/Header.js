@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import UserSnippet from './UserSnippet'
 
 class Header extends Component {
+    constructor(props){
+        super(props)
+    }
+
     render() { 
         return (
-        <div className='Header'>
-            <h1 className='Title'>Character App</h1>
-            <UserSnippet/>
-        </div> );
+        <div className='header'>
+            <div className="header-left">
+                <h1 className='Title'>Character App</h1>
+            </div>
+
+            <div className="header-right">
+                {this.props.loggedIn
+                    ? <h2>Logged in as {this.props.user.username}</h2>
+                    : <h2>Login or Register</h2>
+                }
+            </div>
+        </div>
+        );
     }
 }
  

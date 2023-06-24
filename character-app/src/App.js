@@ -1,14 +1,16 @@
 import React from 'react';
 
 import Header from './components/Header';
-import Main from './components/Main'
 import './components/App.css';
 
+
 function App() {
+  var loggedIn = false
+  var user = {username:"Logan", password:"Password"}
+
   return (
-    <div>
-      <Header/>
-      <Main/>
+    <div className='app'>
+      <Header loggedIn={loggedIn} user={user}/>
     </div>
   );
 }
