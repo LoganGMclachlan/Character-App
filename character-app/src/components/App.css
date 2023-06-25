@@ -8,13 +8,31 @@
 }
 
 .header-left{
-  float:left;
   margin-left:20px
 }
 
 .header-right{
   float:right;
-  margin-top:10px;
+  margin-top:-95px;
   margin-right:20px;
   color:white
+}
+
+.left-column{
+  float:left;
+  border:3px black solid;
+  margin:20px;
+  padding:8px;
+  width:20%;
+  min-height:450px
+}
+
+.left-column-title{
+  margin:0px;
+  text-align:center
+}
+
+.create-new-button{
+  background-color: red;
+  color:white;
 }

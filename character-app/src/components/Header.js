@@ -14,9 +14,9 @@ class Header extends Component {
             </div>
 
             <div className="header-right">
-                {this.props.loggedIn
+                {this.props.user
                     ? <h2>Logged in as {this.props.user.username}</h2>
-                    : <h2>Login or Register</h2>
+                    : <></>
                 }
             </div>
         </div>
