@@ -15,16 +15,18 @@
   float:right;
   margin-top:-95px;
   margin-right:20px;
-  color:white
+  color:white;
+  cursor: pointer
 }
 
 .left-column{
   float:left;
   border:3px black solid;
   margin:20px;
+  margin-top:10px;
   padding:8px;
   width:20%;
-  min-height:450px
+  min-height:480px
 }
 
 .left-column-title{
