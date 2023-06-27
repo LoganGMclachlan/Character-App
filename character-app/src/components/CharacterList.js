@@ -20,7 +20,7 @@ class CharacterList extends Component {
                         Character 3
                     </tr>
                 </table>
-                <button className='create-new-button'>Create New</button>
+                <button className='red-button'>Create New</button>
             </div>
          );
     }

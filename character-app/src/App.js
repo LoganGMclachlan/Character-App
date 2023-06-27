@@ -19,12 +19,21 @@ function App() {
     setVisible(false);
   }
 
+  const login = (e) => {
+    console.log("loging in")
+  }
+
+  const register = (e) => {
+    console.log("registering")
+  }
+
   return (
     <div>
       <Header user={user2} showLogin={renderLoginComp}/>
       <LeftColumn user={user2}/>
       {loginVisible &&
-        (<LoginRegister xHandler={removeLoginComp}
+        (<LoginRegister
+          xHandler={removeLoginComp}
           loginHandler={login}
           registerHandler={register}/>)
       }

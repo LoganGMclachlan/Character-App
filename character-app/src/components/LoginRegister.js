@@ -9,8 +9,8 @@ class LoginRegister extends Component {
     render() { 
         return (
         <div className='small-form'>
-            <button className='corner-x' onClick={this.props.xHandler}>X</button>
-            <form>
+            <button className='x-button' onClick={this.props.xHandler}>X</button>
+            <form onSubmit={this.props.loginHandler}>
                 <h2>Login to Account</h2>
                 <label>Username:</label>
                 <input type='text'/><br/>
@@ -18,7 +18,7 @@ class LoginRegister extends Component {
                 <input type='password'/><br/>
                 <button type='submit' className='red-button'>Login</button>
             </form>
-            <form>
+            <form onSubmit={this.props.registerHandler}>
             <h2>Register new Account</h2>
                 <label>Username:</label>
                 <input type='text'/><br/>

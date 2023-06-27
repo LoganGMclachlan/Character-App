@@ -19,6 +19,10 @@
   cursor: pointer
 }
 
+.header-right:hover{
+  color:black
+}
+
 .left-column{
   float:left;
   border:3px black solid;
@@ -34,7 +38,31 @@
   text-align:center
 }
 
-.create-new-button{
+.red-button{
   background-color: red;
-  color:white;
+  color:white
+}
+
+.red-button:hover{
+  color:black
+}
+
+.x-button{
+  float:right;
+  margin-top:-10px;
+  margin-right:-10px;
+  font-size: 4
+}
+
+.x-button:hover{
+  background-color: red
+}
+
+.small-form{
+  width:30%;
+  float:left;
+  border:3px black solid;
+  margin-top:10px;
+  padding:10px;
+  text-align: center;
 }
