@@ -1,59 +1,68 @@
-import { useState } from 'react';
+import { PureComponent } from 'react';
 
 import Header from './components/Header';
 import LeftColumn from './components/LeftColumn';
 import LoginRegister from './components/LoginRegister'
 
 
-function App() {
-  const [loginVisible, setVisible] = useState(false);
-  const userList = []
-  userList.add({username:"Logan", password:"Password"})
-  userList.add({username:"Jon", password:"Password2"})
-  var currentUser = null
-  
-  const renderLoginComp = () => {
-    setVisible(true);
+class App extends PureComponent {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      loginVisible: false,
+      currentUser: null,
+      userList: new Array
+    }
+    this.state.userList.push({username:"Logan", password:"Password"})
+    this.state.userList.push({username:"Jon", password:"Password2"})
   }
 
-  const removeLoginComp = () => {
-    setVisible(false);
+  RenderLoginComp = () => {
+    this.setState({loginVisible: true})
+  }
+  RemoveLoginComp = () => {
+    this.setState({loginVisible: false})
   }
 
-  const login = (username,password) => {
-    userList.forEach(e => {
+  Login = (username,password) => {
+    this.state.userList.forEach(e => {
       if(e.username == username && e.password == password){
-        currentUser = e
+        this.setState({currentUser: e})
+        this.RemoveLoginComp()
         alert(`Logged in as ${username}`)
       }
     });
   }
 
-  const register = (username,password) => {
+  Register = (username,password) => {
     var userExists = false
     while(!userExists){
-      userList.forEach(e => {
+      this.state.userList.forEach(e => {
         if(e.username == username){
           userExists = true
         }
       });
-      currentUser = {username:username,password:password} 
-      userList.add(currentUser)
+      this.setState({currentUser: {username:username,password:password}})
+      this.state.userList.push(this.state.currentUser)
+      alert(`Registered new account`)
     }
   }
 
+  render() { 
   return (
     <div>
-      <Header user={user2} showLogin={renderLoginComp}/>
-      <LeftColumn user={user2}/>
-      {loginVisible &&
+      <Header user={this.state.currentUser} showLogin={this.RenderLoginComp}/>
+      <LeftColumn user={this.state.currentUser}/>
+      {this.state.loginVisible &&
         (<LoginRegister
-          xHandler={removeLoginComp}
-          loginHandler={login}
-          registerHandler={register}/>)
+          xHandler={this.RemoveLoginComp}
+          loginHandler={this.Login}
+          registerHandler={this.Register}/>)
       }
     </div>
-  );
+    )
+  }
 }
 
 export default App;

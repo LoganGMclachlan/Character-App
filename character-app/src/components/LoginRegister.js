@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './App.css';
 
-class LoginRegister extends Component {
+class LoginRegister extends PureComponent {
     constructor(props){
         super(props)
 
@@ -45,21 +45,23 @@ class LoginRegister extends Component {
     }
 
     ChangeLUsername = (event) => {
-        this.setState({
-            lUsername: event.target.value
-        })
+        this.setState({lUsername: event.target.value})
     }
 
-    LoginHandler(){
-        if(state.lUsername != '' && state.lPassword != ''){
-            this.props.loginHandler(state.lUsername,state.lPassword)
+    LoginHandler = event => {
+        if(this.state.lUsername != '' && this.state.lPassword != ''){
+            this.props.loginHandler(this.state.lUsername,this.state.lPassword)
         }
+        else{
+            alert("Username or password fields are empty")
+        }
+        event.preventDefault()
     }
 
     RegisterHandler(){
-        if(state.rUsername != '' && state.rPassword != ''){
-            if(state.rPassword == state.rConfirmPass){
-                this.props.loginHandler(state.rUsername,state.rPassword)
+        if(this.state.rUsername != '' && this.state.rPassword != ''){
+            if(this.state.rPassword == this.state.rConfirmPass){
+                this.props.loginHandler(this.state.rUsername,this.state.rPassword)
             }
         }
     }
@@ -69,7 +71,8 @@ class LoginRegister extends Component {
         return (
         <div className='small-form'>
             <button className='x-button' onClick={this.props.xHandler}>X</button>
-            <form onSubmit={this.props.loginHandler}>
+            
+            <form onSubmit={this.LoginHandler}>
                 <h2>Login to Account</h2>
                 <label>Username:</label>
                 <input type='text' 
@@ -78,23 +81,24 @@ class LoginRegister extends Component {
                 <label>Password:</label>
                 <input type='password' 
                     value={this.state.lPassword}
-                    onChange={this.Change}/><br/>
+                    onChange={this.ChangeLPassword}/><br/>
                 <button type='submit' className='red-button'>Login</button>
             </form>
-            <form onSubmit={this.props.registerHandler}>
+
+            <form onSubmit={this.RegisterHandler}>
             <h2>Register new Account</h2>
                 <label>Username:</label>
                 <input type='text' 
                     value={this.state.rUsername}
-                    onChange={this.Change}/><br/>
+                    onChange={this.ChangeRUsername}/><br/>
                 <label>Password:</label>
                 <input type='password' 
                     value={this.state.rPassword}
-                    onChange={this.Change}/><br/>
+                    onChange={this.ChangeRPassword}/><br/>
                 <label>Confirm Password:</label>
                 <input type='password' 
                     value={this.state.rConfirmPass}
-                    onChange={this.Change}/><br/>
+                    onChange={this.ChangeRConfirmPass}/><br/>
                 <button type='submit' className='red-button'>Register</button>
             </form>
         </div>
