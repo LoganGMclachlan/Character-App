@@ -15,35 +15,20 @@ class LoginRegister extends PureComponent {
     }
 
     ChangeLUsername = (event) => {
-        this.setState({
-            lUsername: event.target.value
-        })
+        this.setState({lUsername: event.target.value})
     }
-
     ChangeLPassword = (event) => {
-        this.setState({
-            lPassword: event.target.value
-        })
+        this.setState({lPassword: event.target.value})
     }
-
     ChangeRUsername = (event) => {
-        this.setState({
-            rUsername: event.target.value
-        })
+        this.setState({rUsername: event.target.value})
     }
-
     ChangeRPassword = (event) => {
-        this.setState({
-            rPassword: event.target.value
-        })
+        this.setState({rPassword: event.target.value})
     }
-
     ChangeRConfirmPass = (event) => {
-        this.setState({
-            rConfirmPass: event.target.value
-        })
+        this.setState({rConfirmPass: event.target.value})
     }
-
     ChangeLUsername = (event) => {
         this.setState({lUsername: event.target.value})
     }
@@ -58,15 +43,15 @@ class LoginRegister extends PureComponent {
         event.preventDefault()
     }
 
-    RegisterHandler(){
+    RegisterHandler = event => {
         if(this.state.rUsername != '' && this.state.rPassword != ''){
-            if(this.state.rPassword == this.state.rConfirmPass){
+            if(this.state.rPassword === this.state.rConfirmPass){
                 this.props.loginHandler(this.state.rUsername,this.state.rPassword)
             }
         }
+        event.preventDefault()
     }
         
-
     render() { 
         return (
         <div className='small-form'>
