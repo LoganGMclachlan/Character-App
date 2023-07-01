@@ -38,7 +38,7 @@ class LoginRegister extends PureComponent {
             this.props.loginHandler(this.state.lUsername,this.state.lPassword)
         }
         else{
-            alert("Username or password fields are empty")
+            alert("Enter a username and password")
         }
         event.preventDefault()
     }
@@ -46,8 +46,14 @@ class LoginRegister extends PureComponent {
     RegisterHandler = event => {
         if(this.state.rUsername != '' && this.state.rPassword != ''){
             if(this.state.rPassword === this.state.rConfirmPass){
-                this.props.loginHandler(this.state.rUsername,this.state.rPassword)
+                this.props.registerHandler(this.state.rUsername,this.state.rPassword)
             }
+            else{
+                alert("Passwords do not match")
+            }
+        }
+        else{
+            alert("Enter a username and password")
         }
         event.preventDefault()
     }

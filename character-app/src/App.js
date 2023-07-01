@@ -26,25 +26,40 @@ class App extends PureComponent {
   }
 
   Login = (username,password) => {
+    var logIn = null// will store user obj to be logged in
+
     this.state.userList.forEach(e => {
       if(e.username == username && e.password == password){
-        this.setState({currentUser: e})
-        this.RemoveLoginComp()
-        alert(`Logged in as ${username}`)
+        logIn = e
       }
     });
+
+    if (logIn){
+      this.setState({currentUser: logIn})
+      
+      this.RemoveLoginComp()
+      alert(`Logged in as ${logIn.username}`)
+    }
+    else{
+      alert("Incorrect Username or Password")
+    }
   }
 
   Register = (username,password) => {
     var userExists = false
-    while(!userExists){
-      this.state.userList.forEach(e => {
-        if(e.username == username){
-          userExists = true
-        }
-      });
-      this.setState({currentUser: {username:username,password:password}})
-      this.state.userList.push(this.state.currentUser)
+    
+    this.state.userList.forEach(e => {
+      if(e.username == username){
+        userExists = true
+      }
+    });
+
+    if (userExists == false){
+      var newUser = {username:username,password:password,characters:new Array}
+      this.setState({currentUser: newUser})
+      this.state.userList.push(newUser)
+
+      this.RemoveLoginComp()
       alert(`Registered new account`)
     }
   }
