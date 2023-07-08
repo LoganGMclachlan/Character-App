@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 
-class LoginRegister extends PureComponent {
+class LoginRegister extends Component {
     constructor(props){
         super(props)
 
