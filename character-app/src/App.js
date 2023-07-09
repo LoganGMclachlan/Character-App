@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       loginVisible: false,
       userDetailsVisable: false,
-      currentUser: {username:"f", password:"f"},
+      currentUser: null,
       userList: new Array
     }
     this.state.userList.push({username:"Logan", password:"Password"})
@@ -75,7 +75,8 @@ class App extends Component {
   }
 
   EditUsername = newUsername => {
-    counter = -1
+    var counter = -1
+    var updatedList
     this.state.userList.forEach(e => {
       counter++
       if (e.username == this.state.currentUser.username){
