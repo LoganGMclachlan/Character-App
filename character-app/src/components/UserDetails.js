@@ -16,7 +16,7 @@ class UserDetails extends PureComponent {
 
     UpdateUsernameHandler = event => {
         if (this.state.username != ''){
-            this.props.editUsernameHandler(this.state.username)
+            this.props.editUsername(this.state.username)
             alert(`Username updated to ${this.state.username}!`)
         }
         else{
@@ -27,9 +27,7 @@ class UserDetails extends PureComponent {
 
     render() { 
         return (
-        <div className='small-form'>
-            <button className='x-button' onClick={this.props.xHandler}>X</button>
-            
+        <div>
             <h2>Account Details</h2>
 
             <form onSubmit={this.UpdateUsernameHandler}>

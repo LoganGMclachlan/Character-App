@@ -1,9 +1,9 @@
-import { Component } from 'react';
-
-import Header from './components/Header';
-import LeftColumn from './components/LeftColumn';
-import LoginRegister from './components/LoginRegister'
-import UserDetails from './components/UserDetails';
+import { Component } from 'react'
+import Header from './components/Header'
+import LeftColumn from './components/LeftColumn'
+import Register from './components/Register'
+import Login from './components/Login'
+import UserDetails from './components/UserDetails'
 
 
 class App extends Component {
@@ -74,12 +74,15 @@ class App extends Component {
     }
   }
 
-  EditUsername = (newUsername) => {
+  EditUsername = newUsername => {
+    counter = -1
     this.state.userList.forEach(e => {
-      if (e.username == this.currentUser){
-        e.username = newUsername
-        this.setState({currentUser: e})
-
+      counter++
+      if (e.username == this.state.currentUser.username){
+        updatedList = this.state.userList
+        updatedList[counter].username = newUsername
+        this.setState({userList:updatedList})
+        this.setState({currentUser:updatedList[counter]})
       }
     });
   }
@@ -92,17 +95,26 @@ class App extends Component {
       showLogin={this.RenderLoginComp}
       showUser={this.RenderUserComp}/>
       <LeftColumn user={this.state.currentUser}/>
+
       {this.state.loginVisible &&
-        (<LoginRegister
-          xHandler={this.RemoveLoginComp}
-          loginHandler={this.Login}
-          registerHandler={this.Register}/>)
+        (
+          <div className='small-form'>
+            <button className='x-button' onClick={this.RemoveLoginComp}>X</button>
+            <Login loginHandler={this.Login}/>
+            <Register registerHandler={this.Register}/>
+          </div>
+        )
       }
+
       {this.state.userDetailsVisable &&
-        (<UserDetails
-          xHandler={this.RemoveUserComp}
-          editUsernameHandler={this.EditUsername}
-          user={this.state.currentUser}/>)
+        (
+          <div className='small-form'>
+            <button className='x-button' onClick={this.RemoveUserComp}>X</button>
+            <UserDetails
+            editUsername={this.EditUsername}
+            user={this.state.currentUser}/>
+          </div>
+        )
       }
     </div>
     )
