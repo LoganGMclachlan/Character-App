@@ -13,12 +13,11 @@ class App extends Component {
     this.state = {
       loginVisible: false,
       userDetailsVisable: false,
-      currentUser: null,
+      currentUser: {username:"Logan",email:'logan.g.mclachlan@gmail.com',password:"Password"},
       userList: new Array
     }
-    this.state.userList.push({username:"Logan", password:"Password"})
-    this.state.userList.push({username:"Jon", password:"Password2"})
-    this.state.userList.push({username:"f", password:"f"})
+    this.state.userList.push({username:"Logan",email:'logan.g.mclachlan@gmail.com',password:"Password"})
+    this.state.userList.push({username:"f",email:'test@email.com',password:"f"})
   }
 
   RenderLoginComp = () => {
@@ -55,7 +54,7 @@ class App extends Component {
     }
   }
 
-  Register = (username,password) => {
+  Register = (username,email,password) => {
     var userExists = false
     
     this.state.userList.forEach(e => {
@@ -65,7 +64,7 @@ class App extends Component {
     });
 
     if (userExists == false){
-      var newUser = {username:username,password:password,characters:new Array}
+      var newUser = {username:username,email:email,password:password,characters:new Array}
       this.setState({currentUser: newUser})
       this.state.userList.push(newUser)
 
@@ -86,6 +85,25 @@ class App extends Component {
         this.setState({currentUser:updatedList[counter]})
       }
     });
+  }
+
+  EditEmail = newEmail => {
+    var counter = -1
+    var updatedList
+    this.state.userList.forEach(e => {
+      counter++
+      if (e.email == this.state.currentUser.email){
+        updatedList = this.state.userList
+        updatedList[counter].email = newEmail
+        this.setState({userList:updatedList})
+        this.setState({currentUser:updatedList[counter]})
+      }
+    });
+  }
+
+  Logout = () => {
+    this.setState({currentUser:null})
+    this.RemoveUserComp()
   }
 
   render() { 
@@ -113,6 +131,8 @@ class App extends Component {
             <button className='x-button' onClick={this.RemoveUserComp}>X</button>
             <UserDetails
             editUsername={this.EditUsername}
+            editEmail={this.EditEmail}
+            logout={this.Logout}
             user={this.state.currentUser}/>
           </div>
         )

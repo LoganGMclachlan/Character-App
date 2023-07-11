@@ -7,6 +7,7 @@ class Register extends Component {
 
         this.state = {
             username:'',
+            email:'',
             password:'',
             confirmPass:''
         }
@@ -14,6 +15,9 @@ class Register extends Component {
 
     ChangeUsername = (event) => {
         this.setState({username: event.target.value})
+    }
+    ChangeEmail = (event) => {
+        this.setState({email: event.target.value})
     }
     ChangePassword = (event) => {
         this.setState({password: event.target.value})
@@ -25,7 +29,7 @@ class Register extends Component {
     RegisterHandler = event => {
         if(this.state.username != '' && this.state.password != ''){
             if(this.state.password === this.state.confirmPass){
-                this.props.registerHandler(this.state.username,this.state.password)
+                this.props.registerHandler(this.state.username,this.state.email,this.state.password)
             }
             else{
                 alert("Passwords do not match")
@@ -47,6 +51,11 @@ class Register extends Component {
                 <input type='text' 
                     value={this.state.username}
                     onChange={this.ChangeUsername}/><br/>
+
+                <label>Email:</label>
+                <input type='text' 
+                    value={this.state.email}
+                    onChange={this.ChangeEmail}/><br/>
 
                 <label>Password:</label>
                 <input type='password' 

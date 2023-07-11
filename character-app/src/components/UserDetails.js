@@ -6,12 +6,16 @@ class UserDetails extends PureComponent {
         super(props)
 
         this.state = {
-            username:this.props.user.username
+            username:this.props.user.username,
+            email:this.props.user.email
         }
     }
         
     ChangeUsername = (event) => {
         this.setState({username: event.target.value})
+    }
+    ChangeEmail = (event) => {
+        this.setState({email: event.target.value})
     }
 
     UpdateUsernameHandler = event => {
@@ -25,6 +29,17 @@ class UserDetails extends PureComponent {
         event.preventDefault()
     }
 
+    UpdateEmailHandler = event => {
+        this.props.editEmail(this.state.email)
+        alert(`Email updated to ${this.state.email}!`)
+        event.preventDefault()
+    }
+
+    LogoutHandler = event => {
+        this.props.logout()
+        event.preventDefault()
+    }
+
     render() { 
         return (
         <div>
@@ -34,10 +49,16 @@ class UserDetails extends PureComponent {
                 <input value={this.state.username} onChange={this.ChangeUsername}/>
                 <button type='submit' className='red-button'>Update Username</button>
             </form>
+            <form onSubmit={this.UpdateEmailHandler}>
+                <input value={this.state.email} onChange={this.ChangeEmail}/>
+                <button type='submit' className='red-button'>Update Email</button>
+            </form>
 
             <button>Update Password</button>
             <br/>
-            <button>Logout</button>
+            <button onClick={this.LogoutHandler}>Logout</button>
+            <br/>
+            <button className='red-button'>Delete Account</button>
         </div>
         );
     }
