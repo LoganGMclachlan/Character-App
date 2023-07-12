@@ -38,7 +38,7 @@ class App extends Component {
     var logIn = null// will store user obj to be logged in
 
     this.state.userList.forEach(e => {
-      if(e.username == username && e.password == password){
+      if(e.username === username && e.password === password){
         logIn = e
       }
     });
@@ -58,12 +58,12 @@ class App extends Component {
     var userExists = false
     
     this.state.userList.forEach(e => {
-      if(e.username == username){
+      if(e.username === username){
         userExists = true
       }
     });
 
-    if (userExists == false){
+    if (userExists === false){
       var newUser = {username:username,email:email,password:password,characters:new Array}
       this.setState({currentUser: newUser})
       this.state.userList.push(newUser)
@@ -78,7 +78,7 @@ class App extends Component {
     var updatedList
     this.state.userList.forEach(e => {
       counter++
-      if (e.username == this.state.currentUser.username){
+      if (e.username === this.state.currentUser.username){
         updatedList = this.state.userList
         updatedList[counter].username = newUsername
         this.setState({userList:updatedList})
@@ -92,7 +92,7 @@ class App extends Component {
     var updatedList
     this.state.userList.forEach(e => {
       counter++
-      if (e.email == this.state.currentUser.email){
+      if (e.email === this.state.currentUser.email){
         updatedList = this.state.userList
         updatedList[counter].email = newEmail
         this.setState({userList:updatedList})
@@ -104,6 +104,17 @@ class App extends Component {
   Logout = () => {
     this.setState({currentUser:null})
     this.RemoveUserComp()
+  }
+
+  DeleteAccount = user => {
+    var updatedList = new Array
+    this.state.userList.forEach(e => {
+      if (e !== user){
+        updatedList.push(e)
+        this.setState({userList:updatedList})
+        this.setState({currentUser:this.Logout})
+      }
+    });
   }
 
   render() { 
