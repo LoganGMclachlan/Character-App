@@ -19,7 +19,7 @@ class UserDetails extends PureComponent {
     }
 
     UpdateUsernameHandler = event => {
-        if (this.state.username != ''){
+        if (this.state.username !== ''){
             this.props.editUsername(this.state.username)
             alert(`Username updated to ${this.state.username}!`)
         }
@@ -41,8 +41,7 @@ class UserDetails extends PureComponent {
     }
 
     DeleteHandler = event => {
-        var confirmed = window.confirm("Are you sure you want to delete this account?")
-        if (confirmed){
+        if (window.confirm("Are you sure you want to delete this account?")){
             this.props.deleteAccount(this.props.user)
             alert("Account deleted successfuly")
         }

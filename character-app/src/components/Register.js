@@ -27,7 +27,7 @@ class Register extends Component {
     }
 
     RegisterHandler = event => {
-        if(this.state.username != '' && this.state.password != ''){
+        if(this.state.username !== '' && this.state.password !== ''){
             if(this.state.password === this.state.confirmPass){
                 this.props.registerHandler(this.state.username,this.state.email,this.state.password)
             }

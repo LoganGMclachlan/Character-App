@@ -19,7 +19,7 @@ class Login extends Component {
     }
 
     LoginHandler = event => {
-        if(this.state.username != '' && this.state.password != ''){
+        if(this.state.username !== '' && this.state.password !== ''){
             this.props.loginHandler(this.state.username,this.state.password)
         }
         else{
