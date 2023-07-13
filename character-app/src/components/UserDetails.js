@@ -41,8 +41,9 @@ class UserDetails extends PureComponent {
     }
 
     DeleteHandler = event => {
-        if (confirm("Are you sure you want to delete this account?")){
-            this.props.deleteAccount()
+        var confirmed = window.confirm("Are you sure you want to delete this account?")
+        if (confirmed){
+            this.props.deleteAccount(this.props.user)
             alert("Account deleted successfuly")
         }
         event.preventDefault()

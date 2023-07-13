@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       loginVisible: false,
       userDetailsVisable: false,
-      currentUser: {username:"Logan",email:'logan.g.mclachlan@gmail.com',password:"Password"},
+      currentUser: null,
       userList: new Array
     }
     this.state.userList.push({username:"Logan",email:'logan.g.mclachlan@gmail.com',password:"Password"})
@@ -112,7 +112,7 @@ class App extends Component {
       if (e !== user){
         updatedList.push(e)
         this.setState({userList:updatedList})
-        this.setState({currentUser:this.Logout})
+        this.Logout()
       }
     });
   }
@@ -144,6 +144,7 @@ class App extends Component {
             editUsername={this.EditUsername}
             editEmail={this.EditEmail}
             logout={this.Logout}
+            deleteAccount={this.DeleteAccount}
             user={this.state.currentUser}/>
           </div>
         )
