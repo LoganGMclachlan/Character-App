@@ -37,12 +37,14 @@ class Login extends Component {
                 <label>Username:</label>
                 <input type='text' 
                     value={this.state.username}
-                    onChange={this.ChangeUsername}/><br/>
+                    onChange={this.ChangeUsername}
+                    className='input-field'/><br/>
 
                 <label>Password:</label>
                 <input type='password' 
                     value={this.state.password}
-                    onChange={this.ChangePassword}/><br/>
+                    onChange={this.ChangePassword}
+                    className='input-field'/><br/>
                     
                 <button type='submit' className='red-button'>Login</button>
             </form>

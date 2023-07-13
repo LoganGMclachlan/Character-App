@@ -59,7 +59,7 @@
 }
 
 .small-form{
-  width:30%;
+  width:35%;
   float:left;
   border:3px black solid;
   margin-top:10px;
@@ -68,5 +68,5 @@
 }
 
 .input-field{
-  width:fit-content
+  width:260px
 }

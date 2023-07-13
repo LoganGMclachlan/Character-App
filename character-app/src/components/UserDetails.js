@@ -55,11 +55,17 @@ class UserDetails extends PureComponent {
             <h2>Account Details</h2>
 
             <form onSubmit={this.UpdateUsernameHandler}>
-                <input value={this.state.username} onChange={this.ChangeUsername} className='input-field'/>
+                <input type='text'
+                    value={this.state.username}
+                    onChange={this.ChangeUsername}
+                    className='input-field'/><br/>
                 <button type='submit' className='red-button'>Update Username</button>
             </form>
             <form onSubmit={this.UpdateEmailHandler}>
-                <input value={this.state.email} onChange={this.ChangeEmail} className='input-field'/>
+                <input type='text'
+                    value={this.state.email} 
+                    onChange={this.ChangeEmail} 
+                    className='input-field'/><br/>
                 <button type='submit' className='red-button'>Update Email</button>
             </form>
 

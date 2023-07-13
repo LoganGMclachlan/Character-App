@@ -50,22 +50,26 @@ class Register extends Component {
                 <label>Username:</label>
                 <input type='text' 
                     value={this.state.username}
-                    onChange={this.ChangeUsername}/><br/>
+                    onChange={this.ChangeUsername}
+                    className='input-field'/><br/>
 
                 <label>Email:</label>
                 <input type='text' 
                     value={this.state.email}
-                    onChange={this.ChangeEmail}/><br/>
+                    onChange={this.ChangeEmail}
+                    className='input-field'/><br/>
 
                 <label>Password:</label>
                 <input type='password' 
                     value={this.state.password}
-                    onChange={this.ChangePassword}/><br/>
+                    onChange={this.ChangePassword}
+                    className='input-field'/><br/>
 
                 <label>Confirm Password:</label>
                 <input type='password' 
                     value={this.state.confirmPass}
-                    onChange={this.ChangeConfirmPass}/><br/>
+                    onChange={this.ChangeConfirmPass}
+                    className='input-field'/><br/>
 
                 <button type='submit' className='red-button'>Register</button>
             </form>
