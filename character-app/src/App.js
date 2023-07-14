@@ -12,7 +12,7 @@ class App extends Component {
 
     this.state = {
       loginVisible: false,
-      userDetailsVisable: false,
+      userDetailsVisible: false,
       currentUser: null,
       userList: new Array
     }
@@ -28,10 +28,10 @@ class App extends Component {
   }
 
   RenderUserComp = () => {
-    this.setState({userDetailsVisable: true})
+    this.setState({userDetailsVisible: true})
   }
   RemoveUserComp = () => {
-    this.setState({userDetailsVisable: false})
+    this.setState({userDetailsVisible: false})
   }
 
   Login = (username,password) => {
@@ -136,7 +136,7 @@ class App extends Component {
         )
       }
 
-      {this.state.userDetailsVisable &&
+      {this.state.userDetailsVisible &&
         (
           <div className='small-form'>
             <button className='x-button' onClick={this.RemoveUserComp}>X</button>
