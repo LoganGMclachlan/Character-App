@@ -15,8 +15,8 @@ class Header extends Component {
 
             <div className="header-right">
                 {this.props.user
-                    ? <h2 onClick={this.props.showUser}>Logged in as {this.props.user.username}</h2>
-                    : <h2 onClick={this.props.showLogin}>Login or Register</h2>
+                    ? <h2 onClick={this.props.showUser()}>Logged in as {this.props.user.username}</h2>
+                    : <h2 onClick={this.props.showLogin()}>Login or Register</h2>
                 }
             </div>
         </div>
