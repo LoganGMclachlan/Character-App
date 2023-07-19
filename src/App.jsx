@@ -2,8 +2,10 @@ import { useState } from 'react'
 import './components/styles.css'
 import Header from './components/Header'
 import CharacterList from './components/CharacterList'
+import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 
-export function App() {
+export default function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [userList, setUserList] = useState([])
   const [loginFormVisable, setLoginFormVisable] = useState(false)
@@ -14,21 +16,29 @@ export function App() {
     userList.every(user => {
       if(user.username === username || user.email === email){
         userExists = true
+        alert("User with entered username or email already exists")
         return false
       }
     })
 
     if(!userExists){
+      var newUser = {id: crypto.randomUUID(),
+        username: username,
+        email: email,
+        password: password,
+        characters: []}
+
       setUserList(currentUsers => {
         return[
           ...currentUsers,
-          {id: crypto.randomUUID(),
-          username: username,
-          email: email,
-          password: password,
-          characters: []},
+          newUser,
         ]
       })
+
+      setCurrentUser(newUser)
+      setLoginFormVisable(false)
+      alert("Account created successfuly")
+      
     }
   }
 
@@ -43,6 +53,7 @@ export function App() {
       if (user.username === username &&
         user.password === password){
           setCurrentUser(user)
+          setLoginFormVisable(false)
           return false
         }
     })
@@ -50,11 +61,16 @@ export function App() {
 
   return (
     <>
-      <Header user={currentUser}
-      showLogin={() => {setLoginFormVisable(true)}}
-      showUser={() => {setUserFormVisable(true)}}/>
+      <Header user={currentUser} showLogin={setLoginFormVisable}
+      showUser={setUserFormVisable}/>
 
-      <CharacterList characters={currentUser.characters}/>
+      {currentUser
+        ? <CharacterList characters={currentUser.characters}/>
+        : <div className='left-column'>
+            <h3 className='left-column-title'>Characters</h3>
+            <p><b onClick={() => {setLoginFormVisable(true)}}>login</b> to view and create characters</p>
+          </div>
+      }
 
       {loginFormVisable &&
         (

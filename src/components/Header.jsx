@@ -1,6 +1,6 @@
 import './styles.css';
 
-export function Header([user,showLogin,showUser]){
+export default function Header({user,showLogin,showUser}){
     return (
     <div className='header'>
         <div className="header-left">
@@ -9,8 +9,8 @@ export function Header([user,showLogin,showUser]){
 
         <div className="header-right">
             {user
-                ? <h2 onClick={showUser}>Logged in as {user.username}</h2>
-                : <h2 onClick={showLogin}>Login or Register</h2>
+                ? <h2 onClick={() => showUser(true)}>Logged in as {user.username}</h2>
+                : <h2 onClick={() => showLogin(true)}>Login or Register</h2>
             }
         </div>
     </div>

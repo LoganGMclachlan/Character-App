@@ -1,13 +1,14 @@
 import './styles.css'
 
-export function CharacterList([characters]){
+export default function CharacterList({characters}){
     return(
-        <ul>
+        <ul className='left-column'>
+            <h3 className='left-column-title'>Characters</h3>
             {characters.length === 0 && "You have no characters"}
             {characters.map(character => {
                 return (<CharacterItem name={character.name}/>)
             })}
-            <button>Create New</button>
+            <button className='red-button'>Create New</button>
         </ul>
     )
 }
