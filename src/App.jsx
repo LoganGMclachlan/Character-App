@@ -56,9 +56,14 @@ export default function App() {
   }
 
   function deleteUser(id){
-    setUserList(currentUsers => {
-      return currentUsers.filter(user => user.id !== id)
-    })
+    if(window.confirm("are you sure you want to delete this account?")){
+      setUserList(currentUsers => {
+        return currentUsers.filter(user => user.id !== id)
+      })
+      setUserFormVisable(false)
+      setCurrentUser(null)
+      alert("account deleted")
+    }
   }
 
   function login(username,password){
@@ -121,6 +126,11 @@ export default function App() {
     }
   }
 
+  function logout(){
+    setCurrentUser(null)
+    setUserFormVisable(false)
+  }
+
   return (
     <>
       <Header user={currentUser} showLogin={setLoginFormVisable}
@@ -130,7 +140,7 @@ export default function App() {
         ? <CharacterList characters={currentUser.characters}/>
         : <div className='left-column'>
             <h3 className='left-column-title'>Characters</h3>
-            <p><b onClick={() => {setLoginFormVisable(true)}}>login</b>
+            <p><b onClick={() => {setLoginFormVisable(true)}}>login </b>
             to view and create characters.</p>
           </div>
       }
@@ -144,6 +154,7 @@ export default function App() {
           </div>
         )
       }
+      
       {userFormVisable &&
         (
           <div className='small-form'>
@@ -151,7 +162,7 @@ export default function App() {
             <UserDetails
             updateUsername={updateUsername}
             updateEmail={updateEmail}
-            logout={() => {setCurrentUser(null)}}
+            logout={logout}
             deleteUser={deleteUser}
             user={currentUser}/>
           </div>
