@@ -20,28 +20,28 @@ export default function RegisterForm({register}){
 
     return(
         <form onSubmit={hanldeRegister}>
-            <h2>Login to Account</h2>
-            <div>
+            <h2>Register new Account</h2>
+            <div className='form-row'>
                 <label>Username:</label>
                 <input type='text' value={username} className='input-field'
                 onChange={e => setUsername(e.target.value)}/>
             </div>
-            <div>
+            <div className='form-row'>
                 <label>Email:</label>
                 <input type='text' value={email} className='input-field'
                 onChange={e => setEmail(e.target.value)}/>
             </div>
-            <div>
+            <div className='form-row'>
                 <label>Password:</label>
                 <input type='password' value={password} className='input-field'
                 onChange={e => setPassword(e.target.value)}/>
             </div>
-            <div>
+            <div className='form-row'>
                 <label>Confirm Password:</label>
                 <input type='password' value={confirmPassword} className='input-field'
                 onChange={e => setConfirmPassword(e.target.value)}/>
             </div>
-            <button className='red-button'>Register</button>
+            <button className='red-btn'>Register</button>
         </form>
     )
 }

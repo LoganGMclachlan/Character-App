@@ -16,17 +16,17 @@ export default function LoginForm({login}){
     return(
         <form onSubmit={hanldeLogin}>
             <h2>Login to Account</h2>
-            <div>
+            <div className='form-row'>
                 <label>Username:</label>
                 <input type='text' value={username} className='input-field'
                 onChange={e => setUsername(e.target.value)}/>
             </div>
-            <div>
+            <div className='form-row'>
                 <label>Password:</label>
                 <input type='password' value={password} className='input-field'
                 onChange={e => setPassword(e.target.value)}/>
             </div>
-            <button className='red-button'>Login</button>
+            <button className='red-btn'>Login</button>
         </form>
     )
 }

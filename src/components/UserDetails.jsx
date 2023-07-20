@@ -24,18 +24,18 @@ export default function UserDetails({updateUsername,updateEmail,logout,deleteUse
     return(
         <>   
             <h2>Account Details</h2>
-            <form onSubmit={hanldeUsernameEdit}>
+            <form onSubmit={hanldeUsernameEdit} className='form-row'>
                 <input type='text' value={username} className='input-field'
                 onChange={e => setUsername(e.target.value)}/>
                 <button>Update</button>
             </form>
-            <form onSubmit={hanldeEmailEdit}>
+            <form onSubmit={hanldeEmailEdit} className='form-row'>
                 <input type='text' value={email} className='input-field'
                 onChange={e => setEmail(e.target.value)}/>
                 <button>Update</button>
             </form>
-            <button onClick={logout}>Logout</button>
-            <button onClick={() => deleteUser(user.id)}>Delete User</button>
+            <button onClick={logout}className='red-btn'>Logout</button>
+            <button onClick={() => deleteUser(user.id)} className='red-btn'>Delete User</button>
         </>
     )
 }

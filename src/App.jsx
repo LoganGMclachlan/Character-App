@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './components/styles.css'
 import Header from './components/Header'
 import CharacterList from './components/CharacterList'
@@ -7,27 +7,31 @@ import RegisterForm from './components/RegisterForm'
 import UserDetails from './components/UserDetails'
 
 export default function App() {
-  const testUsers = [
-    {id: crypto.randomUUID(),
-    username: 'test1',
-    email: 'test1@email.com',
-    password: 'pass1',
-    characters: []},
-    {id: crypto.randomUUID(),
-      username: 'test2',
-      email: 'test2@email.com',
-      password: 'pass2',
-      characters: []}]
-
-  const [currentUser, setCurrentUser] = useState(null)
-  const [userList, setUserList] = useState(testUsers)
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
 
-  function addUser(username,email,password){
+  const [currentUser, setCurrentUser] = useState(() => {
+    const localValue = localStorage.getItem("CURRENT_USER")
+    if(localValue === null) return null
+    return JSON.parse(localValue)
+  })
+  useEffect(() => {
+    localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser))
+  }, [currentUser])
+  
+  const [userList, setUserList] = useState(() => {
+    const localValue = localStorage.getItem("USERS")
+    if(localValue === null) return []
+    return JSON.parse(localValue)
+  })
+  useEffect(() => {
+    localStorage.setItem("USERS", JSON.stringify(userList))
+  }, [userList])
+
+  function register(username,email,password){
     // checks if the username and email entered dont already exist in list
     var userExists = false
-    userList.every(user => {
+    userList.forEach(user => {
       if(user.username === username || user.email === email){
         userExists = true
         alert("User with entered username or email already exists")
@@ -37,18 +41,10 @@ export default function App() {
 
     // adds new user if details are unique
     if(!userExists){
-      var newUser = {id: crypto.randomUUID(),
-        username: username,
-        email: email,
-        password: password,
-        characters: []}
-      setUserList(currentUsers => {
-        return[
-          ...currentUsers,
-          newUser,
-        ]
-      })
-
+      const newUser = {id: crypto.randomUUID(),
+        username: username, email: email,
+        password: password, characters: []}
+      setUserList(currentUsers => {return[...currentUsers,newUser,]})
       setCurrentUser(newUser)
       setLoginFormVisable(false)
       alert("Account created successfuly")
@@ -67,21 +63,27 @@ export default function App() {
   }
 
   function login(username,password){
-    userList.every(user => {
+    let userFound = null
+    userList.forEach(user => {
       if (user.username === username &&
         user.password === password){
-          setCurrentUser(user)
-          setLoginFormVisable(false)
+          userFound = user
           return false
-        }
+      }
     })
+
+    if(userFound){
+      setCurrentUser(userFound)
+      setLoginFormVisable(false)
+    }
+    else{alert("incorrect username or password")}
   }
 
   function updateUsername(id,newUsername){
     // checks if username already exists in array somewere
     var nameExists = false
-    userList.every(user => {
-      if(user.username === newUsername){
+    userList.forEach(user => {
+      if(user.username === newUsername && user.id !== id){
         nameExists = true
         alert("User with entered username already exists")
         return false
@@ -104,8 +106,8 @@ export default function App() {
   function updateEmail(id,newEmail){
     // checks if email already exists in array somewere
     var emailExists = false
-    userList.every(user => {
-      if(user.email === newEmail){
+    userList.forEach(user => {
+      if(user.email === newEmail && user.id !== id){
         emailExists = true
         alert("User with entered email already exists")
         return false
@@ -145,28 +147,20 @@ export default function App() {
           </div>
       }
 
-      {loginFormVisable &&
-        (
+      {loginFormVisable && (
           <div className='small-form'>
-            <button className='x-button' onClick={() => {setLoginFormVisable(false)}}>X</button>
+            <button className='x-btn' onClick={() => {setLoginFormVisable(false)}}>X</button>
             <LoginForm login={login}/>
-            <RegisterForm register={addUser}/>
-          </div>
-        )
+            <RegisterForm register={register}/>
+          </div>)
       }
       
-      {userFormVisable &&
-        (
+      {userFormVisable && (
           <div className='small-form'>
-            <button className='x-button' onClick={() => {setUserFormVisable(false)}}>X</button>
-            <UserDetails
-            updateUsername={updateUsername}
-            updateEmail={updateEmail}
-            logout={logout}
-            deleteUser={deleteUser}
-            user={currentUser}/>
-          </div>
-        )
+            <button className='x-btn'onClick={() => {setUserFormVisable(false)}}>X</button>
+            <UserDetails updateUsername={updateUsername} updateEmail={updateEmail}
+            logout={logout} deleteUser={deleteUser} user={currentUser}/>
+          </div>)
       }
     </>
   )

@@ -8,7 +8,7 @@ export default function CharacterList({characters}){
             {characters.map(character => {
                 return (<CharacterItem name={character.name}/>)
             })}
-            <button className='red-button'>Create New</button>
+            <button className='red-btn'>Create New</button>
         </ul>
     )
 }
