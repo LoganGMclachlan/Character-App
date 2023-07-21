@@ -11,7 +11,8 @@ body {
   margin-top:-30px;
   background-color: red;
   padding-top:15px;
-  padding-bottom:15px
+  padding-bottom:15px;
+  border-bottom: 2px black solid
 }
 
 .header-left{
@@ -41,8 +42,12 @@ body {
 }
 
 .left-column-title{
-  margin:0px;
-  text-align:center
+  margin:-8px;
+  text-align:center;
+  font-size:30px;
+  background-color:red;
+  padding:10px;
+  border-bottom: 2px black solid
 }
 
 .red-btn{
@@ -75,6 +80,7 @@ body {
   margin-top:10px;
   padding:8px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .input-field{
@@ -112,4 +118,13 @@ b{
 }
 .list-title:hover{
   color:red
+}
+
+.character-form{
+  width:70%;
+  float:left;
+  border:3px black solid;
+  margin-top:10px;
+  padding:8px;
+  min-height:480px
 }

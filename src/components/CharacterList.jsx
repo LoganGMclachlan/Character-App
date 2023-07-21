@@ -1,14 +1,14 @@
 import './styles.css'
 import CharacterItem from './CharacterItem'
 
-export default function CharacterList({characters}){
+export default function CharacterList({characters, selectChar}){
     return(
         <div className='left-column'>
             <h3 className='left-column-title'>Characters</h3>
             {characters.length === 0 && "You have no characters"}
             <ul className="list">
                 {characters.map(character => {
-                    return (<CharacterItem character={character}/>)
+                    return (<CharacterItem character={character} selectChar={selectChar}/>)
                 })}
             </ul>
             {characters.length <= 5 &&

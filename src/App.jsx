@@ -4,11 +4,13 @@ import Header from './components/Header'
 import CharacterList from './components/CharacterList'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
+import Character from './components/Character'
 import UserDetails from './components/UserDetails'
 
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
+  const [characterSelected, setCharacterSelected] = useState(null)
 
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
@@ -58,6 +60,7 @@ export default function App() {
       })
       setUserFormVisable(false)
       setCurrentUser(null)
+      setCharacterSelected(null)
       alert("account deleted")
     }
   }
@@ -131,6 +134,7 @@ export default function App() {
   function logout(){
     setCurrentUser(null)
     setUserFormVisable(false)
+    setCharacterSelected(null)
   }
 
   return (
@@ -139,12 +143,19 @@ export default function App() {
       showUser={setUserFormVisable}/>
 
       {currentUser
-        ? <CharacterList characters={currentUser.characters}/>
+        ? <CharacterList characters={currentUser.characters} selectChar={setCharacterSelected}/>
         : <div className='left-column'>
             <h3 className='left-column-title'>Characters</h3>
             <p><b onClick={() => {setLoginFormVisable(true)}}>login </b>
             to view and create characters.</p>
           </div>
+      }
+
+      {characterSelected &&
+        <div className='character-form'>
+          <button className='x-btn' onClick={() => {setCharacterSelected(null)}}>X</button>
+          <Character character={characterSelected}/>
+        </div>
       }
 
       {loginFormVisable && (
