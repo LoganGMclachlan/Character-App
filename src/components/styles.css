@@ -101,17 +101,15 @@ b{
 .list-item{
   width:100%;
   margin-left:-40px;
-  margin-top:-20px;
+  margin-top:-15px;
   list-style: none;
-  border-bottom: 2px grey solid;
 }
 
 .list-title{
-  margin-bottom:-20px
+  margin-bottom:0px;
+  cursor: pointer;
+  text-transform:uppercase;
 }
-
-.list-btn{
-  float:right;
-  margin-top:-45px;
-  cursor: pointer
+.list-title:hover{
+  color:red
 }
