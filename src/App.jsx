@@ -21,7 +21,7 @@ export default function App() {
   
   const [userList, setUserList] = useState(() => {
     const localValue = localStorage.getItem("USERS")
-    if(localValue === null) return []
+    if(localValue === null || localValue === []) return testUsers
     return JSON.parse(localValue)
   })
   useEffect(() => {

@@ -2,6 +2,7 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: Candara
 }
   
 .header{
@@ -91,4 +92,26 @@ body {
 
 b{
   cursor: pointer;
+}
+
+.list{
+  width: 100%;
+}
+
+.list-item{
+  width:100%;
+  margin-left:-40px;
+  margin-top:-20px;
+  list-style: none;
+  border-bottom: 2px grey solid;
+}
+
+.list-title{
+  margin-bottom:-20px
+}
+
+.list-btn{
+  float:right;
+  margin-top:-45px;
+  cursor: pointer
 }
