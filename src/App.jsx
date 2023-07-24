@@ -4,8 +4,9 @@ import Header from './components/Header'
 import CharacterList from './components/CharacterList'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
-import Character from './components/Character'
+import CharacterForm from './components/CharacterForm'
 import UserDetails from './components/UserDetails'
+import Character from './Character'
 
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
@@ -137,13 +138,29 @@ export default function App() {
     setCharacterSelected(null)
   }
 
+  function addCharacter(charName){
+    const newChar = new Character(charName)
+
+    let updatedUser = currentUser
+    updatedUser.characters.push(newChar)
+    setCurrentUser(updatedUser)
+
+    setUserList(userList.map(user => {
+      if(user.id === currentUser.id){
+        return{...user,characters:updatedUser.characters}
+      }
+      else{return user}
+    }))
+  }
+
   return (
     <>
       <Header user={currentUser} showLogin={setLoginFormVisable}
-      showUser={setUserFormVisable}/>
+      showUser={() => {setUserFormVisable(true);setCharacterSelected(null);}}/>
 
       {currentUser
-        ? <CharacterList characters={currentUser.characters} selectChar={setCharacterSelected}/>
+        ? <CharacterList characters={currentUser.characters} addCharacter={addCharacter}
+          selectChar={char => {setUserFormVisable(false);setCharacterSelected(char);}}/>
         : <div className='left-column'>
             <h3 className='left-column-title'>Characters</h3>
             <p><b onClick={() => {setLoginFormVisable(true)}}>login </b>
@@ -154,7 +171,7 @@ export default function App() {
       {characterSelected &&
         <div className='character-form'>
           <button className='x-btn' onClick={() => {setCharacterSelected(null)}}>X</button>
-          <Character character={characterSelected}/>
+          <CharacterForm character={characterSelected}/>
         </div>
       }
 

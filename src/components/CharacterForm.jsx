@@ -1,6 +1,6 @@
 import './styles.css'
 
-export default function Character({character}){
+export default function CharacterForm({character}){
     return(
         <>
             <h3>{character.name}</h3>
