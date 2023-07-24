@@ -9,6 +9,7 @@ export default function CharacterList({characters,selectChar,addCharacter}){
         e.preventDefault()
         if(charName !== ""){
             addCharacter(charName)
+            setCharName("")
         }
         else{alert("enter a name for your new character")}
     }

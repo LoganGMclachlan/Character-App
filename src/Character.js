@@ -1,6 +1,7 @@
 export default class Character{
     // creates a new character with default stats
     constructor(name){
+        this.id=crypto.randomUUID
         this.name=name
         this.level=1
         this.charClass=""

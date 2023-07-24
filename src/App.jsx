@@ -24,7 +24,7 @@ export default function App() {
   
   const [userList, setUserList] = useState(() => {
     const localValue = localStorage.getItem("USERS")
-    if(localValue === null || localValue === []) return testUsers
+    if(localValue === null) return testUsers
     return JSON.parse(localValue)
   })
   useEffect(() => {
@@ -67,6 +67,7 @@ export default function App() {
   }
 
   function login(username,password){
+    console.log(userList)
     let userFound = null
     userList.forEach(user => {
       if (user.username === username &&
