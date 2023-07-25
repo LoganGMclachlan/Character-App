@@ -154,6 +154,23 @@ export default function App() {
     }))
   }
 
+  function deleteCharacter(id){
+    if(window.confirm("are you sure you want to delete this character?")){
+      setUserList(currentUsers => {
+        return currentUsers.map(user => {
+          if(user.id === currentUser.id){
+            user.characters = user.characters.filter(char => char.id !== id)
+            setCurrentUser(user => {return{...user,characters:user.characters}})
+            setCharacterSelected(null)
+            alert("character deleted successfuly")
+            return user
+          }
+          else{return user}
+        })
+      })
+    }
+  }
+
   return (
     <>
       <Header user={currentUser} showLogin={setLoginFormVisable}
