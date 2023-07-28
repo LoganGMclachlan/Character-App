@@ -7,11 +7,13 @@ import RegisterForm from './components/RegisterForm'
 import CharacterForm from './components/CharacterForm'
 import UserDetails from './components/UserDetails'
 import Character from './Character'
+import DBHandler from './DBHandler'
 
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
   const [characterSelected, setCharacterSelected] = useState(null)
+  const db = new DBHandler()
 
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
