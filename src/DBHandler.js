@@ -19,7 +19,7 @@ export default class DBHandler{
             if (err) throw err
                 result.forEach(row => {
                     userList.push({id:row.id,username:row.username,
-                    email:row.email,password:row.password,characters:[]})
+                    email:row.email,password:row.passwordHash,characters:[]})
                 })
             })
         })

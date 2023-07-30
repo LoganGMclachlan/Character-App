@@ -8,6 +8,7 @@ import CharacterForm from './components/CharacterForm'
 import UserDetails from './components/UserDetails'
 import Character from './Character'
 import DBHandler from './DBHandler'
+import bcrypt from 'bcrypt'
 
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
@@ -48,12 +49,21 @@ export default function App() {
     if(!userExists){
       const newUser = {id: crypto.randomUUID(),
         username: username, email: email,
-        password: password, characters: []}
+        password: hashPassword(password), characters: []}
       setUserList(currentUsers => {return[...currentUsers,newUser,]})
       setCurrentUser(newUser)
       setLoginFormVisable(false)
       alert("Account created successfuly")
     }
+  }
+
+  function hashPassword(password){
+    let hash = bcrypt.hash(password, 10).catch(err => console.error(err.message))
+    return hash
+  }
+
+  function compareHashedPassword(hash,password){
+    return bcrypt.compare(password, hash).catch(err => console.error(err.message))   
   }
 
   function deleteUser(id){
@@ -73,7 +83,7 @@ export default function App() {
     let userFound = null
     userList.forEach(user => {
       if (user.username === username &&
-        user.password === password){
+        compareHashedPassword(user.password,password)){
           userFound = user
           return false
       }
