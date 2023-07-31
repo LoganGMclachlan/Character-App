@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import hasher from 'crypto'
 import './components/styles.css'
 import Header from './components/Header'
 import CharacterList from './components/CharacterList'
@@ -8,13 +9,11 @@ import CharacterForm from './components/CharacterForm'
 import UserDetails from './components/UserDetails'
 import Character from './Character'
 import DBHandler from './DBHandler'
-import bcrypt from 'bcrypt'
 
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
   const [characterSelected, setCharacterSelected] = useState(null)
-  const db = new DBHandler()
 
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
@@ -27,7 +26,7 @@ export default function App() {
   
   const [userList, setUserList] = useState(() => {
     const localValue = localStorage.getItem("USERS")
-    if(localValue === null) return testUsers
+    if(localValue === null) return []
     return JSON.parse(localValue)
   })
   useEffect(() => {
@@ -58,12 +57,7 @@ export default function App() {
   }
 
   function hashPassword(password){
-    let hash = bcrypt.hash(password, 10).catch(err => console.error(err.message))
-    return hash
-  }
-
-  function compareHashedPassword(hash,password){
-    return bcrypt.compare(password, hash).catch(err => console.error(err.message))   
+    return hasher.createHash('sha256').update(password).digest('hex')
   }
 
   function deleteUser(id){
@@ -82,8 +76,7 @@ export default function App() {
     console.log(userList)
     let userFound = null
     userList.forEach(user => {
-      if (user.username === username &&
-        compareHashedPassword(user.password,password)){
+      if (user.username === username && hashPassword(password) === user.password){
           userFound = user
           return false
       }

@@ -1,6 +1,7 @@
 import mysql from 'mysql2'
 import Character from './Character'
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // singleton class with functions to interact with the database
 export default class DBHandler{
@@ -19,7 +20,7 @@ export default class DBHandler{
             if (err) throw err
                 result.forEach(row => {
                     userList.push({id:row.id,username:row.username,
-                    email:row.email,password:row.passwordHash,characters:[]})
+                    email:row.email,password:row.password_hash,characters:[]})
                 })
             })
         })
