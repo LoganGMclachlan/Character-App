@@ -1,23 +1,28 @@
 import mysql from 'mysql2'
 import Character from './Character'
-import dotenv from 'dotenv'
-dotenv.config()
+import SQL_Details from './SQL_Details'
+
+let instance
 
 // singleton class with functions to interact with the database
-export default class DBHandler{
-    con = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE})
+class DBHandler{
+    constructor() {
+        if (instance) throw new Error("You can only create one instance!")
+        this.con = mysql.createConnection({
+            host:       SQL_Details.MYSQL_HOST,
+            user:       SQL_Details.MYSQL_USER,
+            password:   SQL_Details.MYSQL_PASSWORD,
+            database:   SQL_Details.MYSQL_DATABASE})
+        instance = this
+    }
     
     // gets user profile data from db and returns it
     getUsers(){
         let userList = []
-        con.connect(err => {
-        if (err) throw err
-            con.query('SELECT * FROM users', (err, result) => {
+        this.con.connect(err => {
             if (err) throw err
+            this.con.query('SELECT * FROM users', (err, result) => {
+                if (err) throw err
                 result.forEach(row => {
                     userList.push({id:row.id,username:row.username,
                     email:row.email,password:row.password_hash,characters:[]})
@@ -29,9 +34,9 @@ export default class DBHandler{
 
     // gets character data and adds it to userlist
     getCharacters(userList){
-        con.connect(err => {
+        this.con.connect(err => {
             if (err) throw err
-            con.query('SELECT * FROM characters', (err, result) => {
+            this.con.query('SELECT * FROM characters', (err, result) => {
                 if (err) throw err
                 result.forEach(row => {
                     // finds the user the character belongs to
@@ -49,3 +54,6 @@ export default class DBHandler{
 
 
 }
+
+const db = Object.freeze(new DBHandler())
+export default db

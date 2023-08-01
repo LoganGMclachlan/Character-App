@@ -8,12 +8,13 @@ import RegisterForm from './components/RegisterForm'
 import CharacterForm from './components/CharacterForm'
 import UserDetails from './components/UserDetails'
 import Character from './Character'
-import DBHandler from './DBHandler'
+import db from './DBHandler'
 
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
   const [characterSelected, setCharacterSelected] = useState(null)
+  db.getUsers()
 
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
@@ -26,7 +27,7 @@ export default function App() {
   
   const [userList, setUserList] = useState(() => {
     const localValue = localStorage.getItem("USERS")
-    if(localValue === null) return []
+    if(localValue === null) return db.getUsers()
     return JSON.parse(localValue)
   })
   useEffect(() => {
