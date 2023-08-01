@@ -14,7 +14,9 @@ const db = mysql.createConnection({
 })
 
 app.get('/', (re,res) => {
-    return res.json("character app backend\n/getUsers to get user data\n/getCharacters to get character data")
+    return res.json(`character app backend
+    /getUsers to get user data
+    /getCharacters to get character data`)
 })
 
 app.listen(8081, () => {
