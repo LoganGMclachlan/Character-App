@@ -14,7 +14,6 @@ export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
   const [characterSelected, setCharacterSelected] = useState(null)
-  db.getUsers()
 
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
