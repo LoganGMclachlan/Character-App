@@ -63,6 +63,6 @@ export default class Character{
         }]
         
         this.inventory=""
-        this.proficiences="common"
+        this.proficiences="common,dagger"
     }
 }
