@@ -47,7 +47,8 @@ body {
   font-size:30px;
   background-color:red;
   padding:10px;
-  border-bottom: 2px black solid
+  border-bottom: 2px black solid;
+  margin-bottom: 10px;
 }
 
 .red-btn{

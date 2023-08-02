@@ -15,8 +15,7 @@ export default function CharacterList({characters,selectChar,addCharacter}){
     }
 
     return(
-        <div className='left-column'>
-            <h3 className='left-column-title'>Characters</h3>
+        <>
             {characters.length === 0 && "You have no characters"}
             <ul className="list">
                 {characters.map(character => {
@@ -32,6 +31,6 @@ export default function CharacterList({characters,selectChar,addCharacter}){
                     <button className='red-btn'>Create New</button>
                 </form>
             }
-        </div>
+        </>
     )
 }

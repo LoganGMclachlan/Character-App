@@ -11,10 +11,14 @@ class DBHandler{
     
     // gets user profile data from db and returns it
     getUsers(){
-        let userList
+        let userList = []
         fetch("http://localhost:8081/getUsers")
         .then(res => res.json())
-        .then(data => userList = data)
+        .then(data => 
+            data.forEach(row => {
+                userList.push({id:row.id,username:row.username,
+                email:row.email,password:row.password_hash,characters:[]})
+            }))
         .catch(err => console.log(err))
         return userList
     }

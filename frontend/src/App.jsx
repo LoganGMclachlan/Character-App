@@ -181,15 +181,15 @@ export default function App() {
       <Header user={currentUser} showLogin={setLoginFormVisable}
       showUser={() => {setUserFormVisable(true);setCharacterSelected(null);}}/>
 
-      {currentUser
-        ? <CharacterList characters={currentUser.characters} addCharacter={addCharacter}
-          selectChar={char => {setUserFormVisable(false);setCharacterSelected(char);}}/>
-        : <div className='left-column'>
-            <h3 className='left-column-title'>Characters</h3>
-            <p><b onClick={() => {setLoginFormVisable(true)}}>login </b>
+      <div className='left-column'>
+        <h3 className='left-column-title'>Characters</h3>
+        {currentUser
+          ? <CharacterList characters={currentUser.characters} addCharacter={addCharacter}
+            selectChar={char => {setUserFormVisable(false);setCharacterSelected(char);}}/>
+          : <p><b onClick={() => {setLoginFormVisable(true)}}>login </b>
             to view and create characters.</p>
-          </div>
-      }
+        }
+      </div>
 
       {characterSelected &&
         <div className='character-form'>

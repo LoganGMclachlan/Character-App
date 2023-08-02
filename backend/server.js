@@ -26,12 +26,7 @@ app.listen(8081, () => {
 app.get('/getUsers', (re, res) => {
     db.query("SELECT * FROM users", (err,data) => {
         if (err) return res.json(err)
-        let userList = []
-        data.forEach(row => {
-            userList.push({id:row.id,username:row.username,
-            email:row.email,password:row.password_hash,characters:[]})
-        })
-        return res.json(userList)
+        return res.json(data)
     })
 })
 
