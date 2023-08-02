@@ -32,9 +32,25 @@ app.get('/getUsers', (req, res) => {
 
 app.post('/addUser', (req,res) => {
     const sql = `INSERT INTO users VALUES ('${req.body.id}','${req.body.username}','${req.body.email}','${req.body.password}')`
-    db.query(sql, (err) => {
+    db.query(sql, err => {
         if (err) return res.json(err)
         return res.json(`New user "${req.body.username}" added to db`)
+    })
+})
+
+app.post('/deleteUser', (req,res) => {
+    const sql = `DELETE FROM users WHERE id='${req.body.id}'`
+    db.query(sql, err => {
+        if (err) return res.json(err)
+        return res.json(`User ${req.body.name} deleted from db`)
+    })
+})
+
+app.post('/deleteCharacter', (req,res) => {
+    const sql = `DELETE FROM characters WHERE id='${req.body.id}'`
+    db.query(sql, err => {
+        if (err) return res.json(err)
+        return res.json(`Character "${req.body.name}" deleted from db`)
     })
 })
 

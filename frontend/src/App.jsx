@@ -62,6 +62,7 @@ export default function App() {
         return currentUsers.filter(user => user.id !== id)
       })
       setUserFormVisable(false)
+      db.deleteUser({id:id,name:currentUser.username})
       setCurrentUser(null)
       setCharacterSelected(null)
       alert("account deleted")

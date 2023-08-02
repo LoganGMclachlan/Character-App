@@ -25,11 +25,33 @@ class DBHandler{
 
     // sends new user data to db
     addUser(newUser){
-        fetch("http://localhost:8081/addUser", {
+        fetch("http://localhost:8081/addUser",{
             method:'POST',
             headers:{'Content-Type':'application/json'},
-            body: JSON.stringify(newUser)})
-        .then(res => res.json())
+            body: JSON.stringify(newUser)
+        }).then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+
+    // deletes an user with matching id
+    deleteUser(user){
+        fetch("http://localhost:8081/deleteUser",{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(user)
+        }).then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+
+    // deletes a character with matching id
+    deleteCharacter(id){
+        fetch("http://localhost:8081/deleteCharacter",{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(id)
+        }).then(res => res.json())
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
