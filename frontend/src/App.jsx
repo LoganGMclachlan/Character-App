@@ -14,6 +14,8 @@ export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
   const [characterSelected, setCharacterSelected] = useState(null)
+  const [userList, setUserList] = useState([])
+  useEffect(() => setUserList(db.getUsers()), [])
 
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
@@ -23,15 +25,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser))
   }, [currentUser])
-  
-  const [userList, setUserList] = useState(() => {
-    const localValue = localStorage.getItem("USERS")
-    if(localValue === null) return db.getUsers()
-    return JSON.parse(localValue)
-  })
-  useEffect(() => {
-    localStorage.setItem("USERS", JSON.stringify(userList))
-  }, [userList])
 
   function register(username,email,password){
     // checks if the username and email entered dont already exist in list
@@ -49,9 +42,12 @@ export default function App() {
       const newUser = {id: crypto.randomUUID(),
         username: username, email: email,
         password: hashPassword(password), characters: []}
+      // updates state variables  
       setUserList(currentUsers => {return[...currentUsers,newUser,]})
       setCurrentUser(newUser)
       setLoginFormVisable(false)
+      // saves new user to db
+      db.addUser(newUser)
       alert("Account created successfuly")
     }
   }

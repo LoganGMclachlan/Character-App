@@ -1,10 +1,12 @@
 const express = require('express')
 const mysql = require('mysql2')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 require('dotenv').config()
 
 const app = express()
 app.use(cors())
+app.use(bodyParser.json())
 
 const db = mysql.createConnection({
     host:       process.env.MYSQL_HOST,
@@ -13,24 +15,30 @@ const db = mysql.createConnection({
     database:   process.env.MYSQL_DATABASE
 })
 
-app.get('/', (re,res) => {
-    return res.json(`character app backend
-    /getUsers to get user data
-    /getCharacters to get character data`)
+app.get('/', (req,res) => {
+    return res.json(`character app backend`)
 })
 
 app.listen(8081, () => {
     console.log("listening")
 })
 
-app.get('/getUsers', (re, res) => {
+app.get('/getUsers', (req, res) => {
     db.query("SELECT * FROM users", (err,data) => {
         if (err) return res.json(err)
         return res.json(data)
     })
 })
 
-app.get('/getCharacters', (re, res) => {
+app.post('/addUser', (req,res) => {
+    const sql = `INSERT INTO users VALUES ('${req.body.id}','${req.body.username}','${req.body.email}','${req.body.password}')`
+    db.query(sql, (err) => {
+        if (err) return res.json(err)
+        return res.json(`New user "${req.body.username}" added to db`)
+    })
+})
+
+app.get('/getCharacters', (req, res) => {
     db.query("SELECT * FROM characters", (err,data) => {
         if (err) return res.json(err)
         return res.json(data)

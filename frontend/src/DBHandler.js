@@ -23,6 +23,17 @@ class DBHandler{
         return userList
     }
 
+    // sends new user data to db
+    addUser(newUser){
+        fetch("http://localhost:8081/addUser", {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(newUser)})
+        .then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+
     // gets character data and adds it to userlist
     getCharacters(userList){
         fetch("http://localhost:8081/getCharacters")
