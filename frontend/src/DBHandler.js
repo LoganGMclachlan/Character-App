@@ -39,6 +39,10 @@ class DBHandler{
         this.genericPost("addUser",newUser)
     }
 
+    addCharacter(newChar){
+        this.genericPost("addCharacter",newChar)
+    }
+
     updatedUsername(user){
         this.genericPost("updateUsername",user)
     }

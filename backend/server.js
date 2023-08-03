@@ -46,6 +46,11 @@ app.post('/addUser', (req,res) => {
 
 })
 
+app.post('/addCharacter', (req,res) =>{
+    const message = `New character added to db`
+    return genericQuery(req.body.sql,message,res)
+})
+
 app.post('/updateUsername', (req,res) => {
     const sql = `UPDATE users SET username='${req.body.username}' WHERE id='${req.body.id}'`
     const message = `Username updated to "${req.body.username}"`

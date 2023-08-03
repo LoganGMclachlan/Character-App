@@ -148,7 +148,7 @@ export default function App() {
     let updatedUser = currentUser
     updatedUser.characters.push(newChar)
     setCurrentUser(updatedUser)
-
+    db.addCharacter({sql:newChar.getInsertQuery(currentUser.id)})
     setUserList(userList.map(user => {
       if(user.id === currentUser.id){
         return{...user,characters:updatedUser.characters}

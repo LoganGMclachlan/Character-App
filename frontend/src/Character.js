@@ -1,43 +1,43 @@
 export default class Character{
     // creates a new character with default stats
     constructor(name){
-        this.id=crypto.randomUUID
+        this.id=crypto.randomUUID()
         this.name=name
         this.level=1
         this.charClass=""
         this.background=""
         
-        this.str=10
-        this.dex=10
-        this.con=10
-        this.int=10
-        this.wis=10
-        this.cha=10
+        this.str=0
+        this.dex=0
+        this.con=0
+        this.int=0
+        this.wis=0
+        this.cha=0
 
-        this.acrobatics=10
-        this.animalHandling=10
-        this.arcana=10
-        this.athletics=10
-        this.deception=10
-        this.history=10
-        this.insight=10
-        this.intimidation=10
-        this.investigation=10
-        this.medicine=10
-        this.nature=10
-        this.perception=10
-        this.performance=10
-        this.persuation=10
-        this.religion=10
-        this.sleightOfHand=10
-        this.stealth=10
-        this.survival=10
+        this.acrobatics=0
+        this.animalHandling=0
+        this.arcana=0
+        this.athletics=0
+        this.deception=0
+        this.history=0
+        this.insight=0
+        this.intimidation=0
+        this.investigation=0
+        this.medicine=0
+        this.nature=0
+        this.perception=0
+        this.performance=0
+        this.persuation=0
+        this.religion=0
+        this.sleightOfHand=0
+        this.stealth=0
+        this.survival=0
         
-        this.max=10
-        this.current=10
-        this.temp=0
+        this.maxHp=10
+        this.currentHp=10
+        this.tempHp=0
         this.hitDiceType="d8"
-        this.hitDiceCount="1"
+        this.hitDiceCount=1
 
         this.proficiencyBonus=2
         this.ac=10
@@ -46,6 +46,9 @@ export default class Character{
 
         this.deathSavesSuccess=0
         this.deathSavesfails=0
+        
+        this.inventory=""
+        this.proficiences="common,dagger"
         
         this.actions=[{
             id:crypto.randomUUID,
@@ -61,8 +64,11 @@ export default class Character{
             title:"Feature Title",
             description:"Add all your new features here"
         }]
-        
-        this.inventory=""
-        this.proficiences="common,dagger"
+    }
+
+    /* method to return a string query that will insert
+    /  the character into the db */
+    getInsertQuery(userId){
+        return `INSERT INTO Characters VALUES ('${this.id}','${this.name}','${this.charClass}',${this.level},'${this.background}',${this.str},${this.dex},${this.con},${this.int},${this.wis},${this.cha},${this.acrobatics},${this.animalHandling},${this.arcana},${this.athletics},${this.deception},${this.history},${this.insight},${this.intimidation},${this.investigation},${this.medicine},${this.nature},${this.perception},${this.performance},${this.persuation},${this.religion},${this.sleightOfHand},${this.stealth},${this.survival},${this.maxHp},${this.currentHp},${this.tempHp},'${this.hitDiceType}',${this.hitDiceCount},${this.proficiencyBonus},${this.ac},${this.speed},${this.initiative},${this.deathSavesSuccess},${this.deathSavesfails},'${this.inventory}','${this.proficiences}','${userId}')`
     }
 }
