@@ -23,6 +23,15 @@ app.listen(8081, () => {
     console.log("listening")
 })
 
+// executes a query then returns an error or message
+function genericQuery(sql,message,res){
+    db.query(sql, err => {
+        if (err) return res.json(err)
+        return res.json(message)
+    })
+}
+
+// finds and returns all user data
 app.get('/getUsers', (req, res) => {
     db.query("SELECT * FROM users", (err,data) => {
         if (err) return res.json(err)
@@ -32,28 +41,36 @@ app.get('/getUsers', (req, res) => {
 
 app.post('/addUser', (req,res) => {
     const sql = `INSERT INTO users VALUES ('${req.body.id}','${req.body.username}','${req.body.email}','${req.body.password}')`
-    db.query(sql, err => {
-        if (err) return res.json(err)
-        return res.json(`New user "${req.body.username}" added to db`)
-    })
+    const message = `New user "${req.body.username}" added to db`
+    return genericQuery(sql,message,res)
+
+})
+
+app.post('/updateUsername', (req,res) => {
+    const sql = `UPDATE users SET username='${req.body.username}' WHERE id='${req.body.id}'`
+    const message = `Username updated to "${req.body.username}"`
+    return genericQuery(sql,message,res)
+})
+
+app.post('/updateEmail', (req,res) => {
+    const sql = `UPDATE users SET email='${req.body.email}' WHERE id='${req.body.id}'`
+    const message = `Email updated to "${req.body.email}"`
+    return genericQuery(sql,message,res)
 })
 
 app.post('/deleteUser', (req,res) => {
     const sql = `DELETE FROM users WHERE id='${req.body.id}'`
-    db.query(sql, err => {
-        if (err) return res.json(err)
-        return res.json(`User ${req.body.name} deleted from db`)
-    })
+    const message = `User ${req.body.username} deleted from db`
+    return genericQuery(sql,message,res)
 })
 
 app.post('/deleteCharacter', (req,res) => {
     const sql = `DELETE FROM characters WHERE id='${req.body.id}'`
-    db.query(sql, err => {
-        if (err) return res.json(err)
-        return res.json(`Character "${req.body.name}" deleted from db`)
-    })
+    const message = `Character "${req.body.name}" deleted from db`
+    return genericQuery(sql,message,res)
 })
 
+// finds and returns all character data
 app.get('/getCharacters', (req, res) => {
     db.query("SELECT * FROM characters", (err,data) => {
         if (err) return res.json(err)

@@ -62,7 +62,7 @@ export default function App() {
         return currentUsers.filter(user => user.id !== id)
       })
       setUserFormVisable(false)
-      db.deleteUser({id:id,name:currentUser.username})
+      db.deleteUser({id:id,username:currentUser.username})
       setCurrentUser(null)
       setCharacterSelected(null)
       alert("account deleted")
@@ -70,7 +70,6 @@ export default function App() {
   }
 
   function login(username,password){
-    console.log(userList)
     let userFound = null
     userList.forEach(user => {
       if (user.username === username && hashPassword(password) === user.password){
@@ -88,7 +87,7 @@ export default function App() {
 
   function updateUsername(id,newUsername){
     // checks if username already exists in array somewere
-    var nameExists = false
+    let nameExists = false
     userList.forEach(user => {
       if(user.username === newUsername && user.id !== id){
         nameExists = true
@@ -106,13 +105,14 @@ export default function App() {
         else{return user}
       }))
       setCurrentUser(user => {return{...user,username:newUsername}})
+      db.updatedUsername({id:currentUser.id,username:newUsername})
       alert("username updated successfuly")
     }
   }
 
   function updateEmail(id,newEmail){
     // checks if email already exists in array somewere
-    var emailExists = false
+    let emailExists = false
     userList.forEach(user => {
       if(user.email === newEmail && user.id !== id){
         emailExists = true
@@ -131,6 +131,7 @@ export default function App() {
         else{return user}
       }))
       setCurrentUser(user => {return{...user,email:newEmail}})
+      db.updatedEmail({id:currentUser.id,email:newEmail})
       alert("email updated successfuly")
     }
   }
