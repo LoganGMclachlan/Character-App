@@ -3,4 +3,4 @@ A React application that allows users to register and create character sheets fo
 
 Uses the following
 frontend: react, crypto, vite-plugin-node-polyfills
-backend: express, cors, mysql2, nodemon
+backend: express, cors, mysql2, nodemon, body-parser
