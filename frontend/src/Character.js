@@ -69,6 +69,17 @@ export default class Character{
     /* method to return a string query that will insert
     /  the character into the db */
     getInsertQuery(userId){
-        return `INSERT INTO Characters VALUES ('${this.id}','${this.name}','${this.charClass}',${this.level},'${this.background}',${this.str},${this.dex},${this.con},${this.int},${this.wis},${this.cha},${this.acrobatics},${this.animalHandling},${this.arcana},${this.athletics},${this.deception},${this.history},${this.insight},${this.intimidation},${this.investigation},${this.medicine},${this.nature},${this.perception},${this.performance},${this.persuation},${this.religion},${this.sleightOfHand},${this.stealth},${this.survival},${this.maxHp},${this.currentHp},${this.tempHp},'${this.hitDiceType}',${this.hitDiceCount},${this.proficiencyBonus},${this.ac},${this.speed},${this.initiative},${this.deathSavesSuccess},${this.deathSavesfails},'${this.inventory}','${this.proficiences}','${userId}')`
+        return `INSERT INTO Characters VALUES (` +
+        `'${this.id}','${this.name}','${this.charClass}',${this.level},'${this.background}',` +
+        `${this.str},${this.dex},${this.con},${this.int},${this.wis},${this.cha},` +
+        `${this.acrobatics},${this.animalHandling},${this.arcana},${this.athletics},` +
+        `${this.deception},${this.history},${this.insight},${this.intimidation},` +
+        `${this.investigation},${this.medicine},${this.nature},${this.perception},` +
+        `${this.performance},${this.persuation},${this.religion},${this.sleightOfHand},` +
+        `${this.stealth},${this.survival},` +
+        `${this.maxHp},${this.currentHp},${this.tempHp},` +
+        `'${this.hitDiceType}',${this.hitDiceCount},${this.proficiencyBonus},${this.ac},` +
+        `${this.speed},${this.initiative},${this.deathSavesSuccess},${this.deathSavesfails},` +
+        `'${this.inventory}','${this.proficiences}','${userId}')`
     }
 }
