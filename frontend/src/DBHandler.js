@@ -11,32 +11,22 @@ class DBHandler{
 
     // posts some data and logs result
     genericPost(route,data){
+        let error = null
         fetch(`http://localhost:8081/${route}`,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify(data)
         }).then(res => res.json())
         .then(res => console.log(res))
-        .catch(err => console.log(err))
-    }
-    
-    // gets user profile data from db and returns it
-    getUsers(){
-        let userList = []
-        fetch("http://localhost:8081/getUsers")
-        .then(res => res.json())
-        .then(data => 
-            data.forEach(row => {
-                userList.push({id:row.id,username:row.username,
-                email:row.email,password:row.password_hash,characters:[]})
-            }))
-        .catch(err => console.log(err))
-        return userList
+        .catch(err => {console.log(res);error=err;})
+        // returns an error if one occured
+        return error
     }
 
     // sends new user data to db
     addUser(newUser){
-        this.genericPost("addUser",newUser)
+        //returns any errors
+        return this.genericPost("addUser",newUser)
     }
 
     addCharacter(newChar){
@@ -44,11 +34,11 @@ class DBHandler{
     }
 
     updatedUsername(user){
-        this.genericPost("updateUsername",user)
+        return this.genericPost("updateUsername",user)
     }
 
     updatedEmail(user){
-        this.genericPost("updateEmail",user)
+        return this.genericPost("updateEmail",user)
     }
 
     // deletes an user with matching id
@@ -61,25 +51,38 @@ class DBHandler{
         this.genericPost("deleteCharacter",character)
     }
 
-    // gets character data and adds it to userlist
-    getCharacters(userList){
-        fetch("http://localhost:8081/getCharacters")
-        .then(res => res.json())
+    // gets character data for a given user id
+    getCharacters(id){
+        let characters = []
+        fetch("http://localhost:8081/getCharacters",{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({userId:id})
+        }).then(res => res.json())
         .then(data => {
-            data.forEach(row => {
-                // finds the user each character belongs to
-                userList.map(user => {
-                    if (user.id === row.userId){
-                        newChar = new Character(row.name)
-                        return{...user,characters:characters.push(newChar)}
-                    }else{return user}
-                })
+            data.forEach(char => {
+                // TODO add all char details to list
+                characters.push(new Character(char.name))
             })
         })
         .catch(err => console.log(err))        
-        return userList
+        return characters
     }
 
+    // gets the user with given username
+    findUser(username){
+        let userFound = null
+        fetch("http://localhost:8081/findUser",{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({username:username})
+        }).then(res => res.json())
+        .then(data => {
+            userFound = {id:data.id,username:data.username,email:data.email,password:data.password_hash,characters:[]}
+        })
+        .catch(err => console.log(err))        
+        return userFound
+    }
 
 }
 

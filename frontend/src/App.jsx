@@ -13,164 +13,134 @@ import db from './DBHandler'
 export default function App() {
   const [loginFormVisable, setLoginFormVisable] = useState(false)
   const [userFormVisable, setUserFormVisable] = useState(false)
-  const [characterSelected, setCharacterSelected] = useState(null)
-  const [userList, setUserList] = useState([])
-  useEffect(() => setUserList(db.getUsers()), [])
 
+  // selected character is fetched form local storage
+  const [characterSelected, setCharacterSelected] = useState(() => {
+    const localValue = localStorage.getItem("CURRENT_CHAR")
+    if(localValue === null) return null
+    return JSON.parse(localValue)
+  })
+  // if selected character is changed, save it to local storage
+  useEffect(() => {
+    localStorage.setItem("CURRENT_CHAR", JSON.stringify(characterSelected))
+  }, [characterSelected])
+
+  
+  // current user is fetched form local storage
   const [currentUser, setCurrentUser] = useState(() => {
     const localValue = localStorage.getItem("CURRENT_USER")
     if(localValue === null) return null
     return JSON.parse(localValue)
   })
+  // if current user is changed, save it to local storage
   useEffect(() => {
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser))
   }, [currentUser])
 
-  function register(username,email,password){
-    // checks if the username and email entered dont already exist in list
-    var userExists = false
-    userList.forEach(user => {
-      if(user.username === username || user.email === email){
-        userExists = true
-        alert("User with entered username or email already exists")
-        return false
-      }
-    })
 
-    // adds new user if details are unique
-    if(!userExists){
-      const newUser = {id: crypto.randomUUID(),
-        username: username, email: email,
-        password: hashPassword(password), characters: []}
-      // updates state variables  
-      setUserList(currentUsers => {return[...currentUsers,newUser,]})
+  function register(username,email,password){
+    // creates user object
+    const newUser = {id: crypto.randomUUID(),
+      username: username, email: email,
+      password: hashPassword(password), characters: []
+    }
+    // trys to add user to database
+    const error = db.addUser(newUser)
+    // if an error is returned alert the user
+    if(error){
+      alert("User with entered name or email already exists")
+    }
+    else{
+      // sets current user and sends success message
       setCurrentUser(newUser)
       setLoginFormVisable(false)
-      // saves new user to db
-      db.addUser(newUser)
       alert("Account created successfuly")
     }
   }
 
+  // takes in a password and returnd a hashed version of it
   function hashPassword(password){
     return hasher.createHash('sha256').update(password).digest('hex')
   }
 
   function deleteUser(id){
+    // makes user confirm before deleting an account
     if(window.confirm("are you sure you want to delete this account?")){
-      setUserList(currentUsers => {
-        return currentUsers.filter(user => user.id !== id)
-      })
-      setUserFormVisable(false)
       db.deleteUser({id:id,username:currentUser.username})
       setCurrentUser(null)
       setCharacterSelected(null)
+      setUserFormVisable(false)
       alert("account deleted")
     }
   }
 
+  // logs a user into their account
   function login(username,password){
-    let userFound = null
-    userList.forEach(user => {
-      if (user.username === username && hashPassword(password) === user.password){
-          userFound = user
-          return false
-      }
-    })
-
-    if(userFound){
+    // trys to find a user with entered username 
+    let userFound = db.findUser(username)
+    // checks if user was found then compares passwords
+    if(userFound !== null && hashPassword(password) === userFound.password){
+      // fetches any characters that user might have
+      userFound.characters = db.getCharacters(userFound.id)
       setCurrentUser(userFound)
       setLoginFormVisable(false)
     }
     else{alert("incorrect username or password")}
   }
 
+  // changes username of a user with given id
   function updateUsername(id,newUsername){
-    // checks if username already exists in array somewere
-    let nameExists = false
-    userList.forEach(user => {
-      if(user.username === newUsername && user.id !== id){
-        nameExists = true
-        alert("User with entered username already exists")
-        return false
-      }
-    })
-
-    // updates username if not found in list
-    if(!nameExists){
-      setUserList(userList.map(user => {
-        if(user.id === id){
-          return{...user,username:newUsername}
-        }
-        else{return user}
-      }))
+    // trys to update username
+    const error = db.updatedUsernameUser(id,newUsername)
+    // if an error is returned alert the user
+    if(error){
+      alert("User with entered name already exists")
+    }
+    else{
+      // updates current user
       setCurrentUser(user => {return{...user,username:newUsername}})
-      db.updatedUsername({id:currentUser.id,username:newUsername})
       alert("username updated successfuly")
     }
   }
 
   function updateEmail(id,newEmail){
-    // checks if email already exists in array somewere
-    let emailExists = false
-    userList.forEach(user => {
-      if(user.email === newEmail && user.id !== id){
-        emailExists = true
-        alert("User with entered email already exists")
-        return false
-      }
-    })
-
-    // updates email if not found in list
-    if(!emailExists){
-      setUserList(userList.map(user => {
-        if(user.id === id){
-          if(user.email === newEmail)
-          return{...user,email:newEmail}
-        }
-        else{return user}
-      }))
+    // trys to update email
+    const error = db.updatedEmail(id,newEmail)
+    // if an error is returned alert the user
+    if(error){
+      alert("User with entered email already exists")
+    }
+    else{
+      // updates current user
       setCurrentUser(user => {return{...user,email:newEmail}})
-      db.updatedEmail({id:currentUser.id,email:newEmail})
       alert("email updated successfuly")
     }
   }
 
+  // logs user out of their account
   function logout(){
     setCurrentUser(null)
     setUserFormVisable(false)
     setCharacterSelected(null)
   }
 
+  // creates a new character
   function addCharacter(charName){
+    // creates character with entered name
     const newChar = new Character(charName)
-
-    let updatedUser = currentUser
-    updatedUser.characters.push(newChar)
-    setCurrentUser(updatedUser)
+    // adds character to current user list
+    setCurrentUser(currentUser.characters.push(newChar))
+    // adds character to database
     db.addCharacter({sql:newChar.getInsertQuery(currentUser.id)})
-    setUserList(userList.map(user => {
-      if(user.id === currentUser.id){
-        return{...user,characters:updatedUser.characters}
-      }
-      else{return user}
-    }))
   }
 
+  // removes a character from a users list
   function deleteCharacter(id){
+    // confirms user wants to delete selected character
     if(window.confirm("are you sure you want to delete this character?")){
-      setUserList(currentUsers => {
-        return currentUsers.map(user => {
-          if(user.id === currentUser.id){
-            user.characters = user.characters.filter(char => char.id !== id)
-            setCurrentUser(user => {return{...user,characters:user.characters}})
-            setCharacterSelected(null)
-            alert("character deleted successfuly")
-            return user
-          }
-          else{return user}
-        })
-      })
+      setCurrentUser(user => {return{...user,characters:characters.filter(char => {if(char.id !== id)return char})}})
+      db.deleteCharacter(id)
+      setCharacterSelected(null)
     }
   }
 
