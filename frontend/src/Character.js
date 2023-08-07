@@ -2,17 +2,17 @@ export default class Character{
     // creates a new character with default stats
     constructor(name){
         this.id=crypto.randomUUID()
-        this.name=name
-        this.level=1
-        this.charClass=""
+        this.char_name=name
+        this.char_level=1
+        this.class=""
         this.background=""
         
-        this.str=0
-        this.dex=0
-        this.con=0
-        this.int=0
-        this.wis=0
-        this.cha=0
+        this.strength=0
+        this.dexterity=0
+        this.constitution=0
+        this.inteligence=0
+        this.wisdom=0
+        this.charisma=0
 
         this.acrobatics=0
         this.animalHandling=0
@@ -33,19 +33,19 @@ export default class Character{
         this.stealth=0
         this.survival=0
         
-        this.maxHp=10
-        this.currentHp=10
-        this.tempHp=0
-        this.hitDiceType="d8"
-        this.hitDiceCount=1
+        this.max_hp=10
+        this.current_hp=10
+        this.temp_hp=0
+        this.hit_dice_type="d8"
+        this.hit_dice_count=1
 
-        this.proficiencyBonus=2
+        this.proficiency_bonus=2
         this.ac=10
         this.speed=30
         this.initiative=0
 
-        this.deathSavesSuccess=0
-        this.deathSavesfails=0
+        this.deathsave_success=0
+        this.deathssaves_fail=0
         
         this.inventory=""
         this.proficiences="common,dagger"

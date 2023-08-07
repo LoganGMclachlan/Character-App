@@ -42,7 +42,7 @@ export default function App() {
     // creates user object
     const newUser = {id: crypto.randomUUID(),
       username: username, email: email,
-      password: hashPassword(password), characters: []
+      password_hash: hashPassword(password), characters: []
     }
     // trys to add user to database
     const error = db.addUser(newUser)
@@ -75,23 +75,25 @@ export default function App() {
   }
 
   // logs a user into their account
-  function login(username,password){
+  async function login(username,password){
     // trys to find a user with entered username 
-    let userFound = db.findUser(username)
+    let userFound = await db.findUser(username)
     // checks if user was found then compares passwords
-    if(userFound !== null && hashPassword(password) === userFound.password){
+    if(userFound !== undefined && hashPassword(password) === userFound.password_hash){
       // fetches any characters that user might have
-      userFound.characters = db.getCharacters(userFound.id)
+      userFound.characters = await db.getCharacters(userFound.id)
       setCurrentUser(userFound)
       setLoginFormVisable(false)
     }
-    else{alert("incorrect username or password")}
+    else{
+      alert("incorrect username or password")
+  }
   }
 
   // changes username of a user with given id
-  function updateUsername(id,newUsername){
+  async function updateUsername(id,newUsername){
     // trys to update username
-    const error = db.updatedUsernameUser(id,newUsername)
+    const error = await db.updatedUsername({id:id,username:newUsername})
     // if an error is returned alert the user
     if(error){
       alert("User with entered name already exists")
@@ -103,9 +105,9 @@ export default function App() {
     }
   }
 
-  function updateEmail(id,newEmail){
+  async function updateEmail(id,newEmail){
     // trys to update email
-    const error = db.updatedEmail(id,newEmail)
+    const error = await db.updatedEmail({id:id,email:newEmail})
     // if an error is returned alert the user
     if(error){
       alert("User with entered email already exists")

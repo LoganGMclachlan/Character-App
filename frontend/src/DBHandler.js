@@ -1,5 +1,3 @@
-import Character from './Character'
-
 let instance
 
 // singleton class with functions to interact with the database
@@ -10,35 +8,32 @@ class DBHandler{
     }
 
     // posts some data and logs result
-    genericPost(route,data){
-        let error = null
-        fetch(`http://localhost:8081/${route}`,{
+    async genericPost(route,info){
+        return await fetch(`http://localhost:8081/${route}`,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
-            body: JSON.stringify(data)
-        }).then(res => res.json())
-        .then(res => console.log(res))
-        .catch(err => {console.log(res);error=err;})
-        // returns an error if one occured
-        return error
+            body: JSON.stringify(info)
+        }).then(data => data.json())
+        .then(data => {console.log(data);return null})
+        .catch(err => {console.log(err);return err})
     }
 
     // sends new user data to db
-    addUser(newUser){
+    async addUser(newUser){
         //returns any errors
-        return this.genericPost("addUser",newUser)
+        return await this.genericPost("addUser",newUser)
     }
 
     addCharacter(newChar){
         this.genericPost("addCharacter",newChar)
     }
 
-    updatedUsername(user){
-        return this.genericPost("updateUsername",user)
+    async updatedUsername(user){
+        return await this.genericPost("updateUsername",user)
     }
 
-    updatedEmail(user){
-        return this.genericPost("updateEmail",user)
+    async updatedEmail(user){
+        return await this.genericPost("updateEmail",user)
     }
 
     // deletes an user with matching id
@@ -52,37 +47,29 @@ class DBHandler{
     }
 
     // gets character data for a given user id
-    getCharacters(id){
+    async getCharacters(id){
         let characters = []
-        fetch("http://localhost:8081/getCharacters",{
+        return await fetch("http://localhost:8081/getCharacters",{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify({userId:id})
         }).then(res => res.json())
         .then(data => {
-            data.forEach(char => {
-                // TODO add all char details to list
-                characters.push(new Character(char.name))
-            })
+            data.forEach(char => characters.push(char))
+            return characters
         })
-        .catch(err => console.log(err))        
-        return characters
+        .catch(err => console.log(err))   
     }
 
     // gets the user with given username
-    findUser(username){
-        let userFound = null
-        fetch("http://localhost:8081/findUser",{
+    async findUser(username){
+        return await fetch("http://localhost:8081/findUser",{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify({username:username})
         }).then(res => res.json())
-        .then(data => {
-            console.log(data)
-            userFound = {id:data.id,username:data.username,email:data.email,password:data.password_hash,characters:[]}
-        })
-        .catch(err => console.log(err))        
-        return userFound
+        .then(data => {console.log(data[0]);return data[0]})
+        .catch(err => {console.log(err);return undefined})
     }
 }
 
