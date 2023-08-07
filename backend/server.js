@@ -15,8 +15,20 @@ const db = mysql.createConnection({
     database:   process.env.MYSQL_DATABASE
 })
 
-app.get('/', (req,res) => {
-    return res.json(`character app backend`)
+// finds and returns all user data
+app.get('/getUsers', (req, res) => {
+    db.query("SELECT * FROM users", (err,data) => {
+        if (err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+// finds and returns all characters
+app.get('/getCharacters', (req,res) => {
+    db.query("SELECT * FROM characters", (err,data) => {
+        if (err) return res.json(err)
+        return res.json(data)
+    })
 })
 
 app.listen(8081, () => {
@@ -30,14 +42,6 @@ function genericQuery(sql,message,res){
         return res.json(message)
     })
 }
-
-// finds and returns all user data
-app.get('/getUsers', (req, res) => {
-    db.query("SELECT * FROM users", (err,data) => {
-        if (err) return res.json(err)
-        return res.json(data)
-    })
-})
 
 app.post('/addUser', (req,res) => {
     const sql = `INSERT INTO users VALUES ('${req.body.id}','${req.body.username}','${req.body.email}','${req.body.password}')`
