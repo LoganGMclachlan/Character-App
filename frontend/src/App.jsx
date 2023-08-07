@@ -141,7 +141,7 @@ export default function App() {
     // confirms user wants to delete selected character
     if(window.confirm("are you sure you want to delete this character?")){
       setCurrentUser(user => {return{...user,characters:characters.filter(char => {if(char.id !== id)return char})}})
-      db.deleteCharacter(id)
+      db.deleteCharacter({id:id})
       setCharacterSelected(null)
     }
   }

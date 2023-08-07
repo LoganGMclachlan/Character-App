@@ -17,10 +17,8 @@ class DBHandler{
         .then(data => {console.log(data);return null})
         .catch(err => {console.log(err);return err})
     }
-
-    // sends new user data to db
+    
     async addUser(newUser){
-        //returns any errors
         return await this.genericPost("addUser",newUser)
     }
 
@@ -36,14 +34,12 @@ class DBHandler{
         return await this.genericPost("updateEmail",user)
     }
 
-    // deletes an user with matching id
     deleteUser(user){
         this.genericPost("deleteUser",user)
     }
 
-    // deletes a character with matching id
-    deleteCharacter(character){
-        this.genericPost("deleteCharacter",character)
+    deleteCharacter(id){
+        this.genericPost("deleteCharacter",id)
     }
 
     // gets character data for a given user id
