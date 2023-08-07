@@ -78,12 +78,12 @@ class DBHandler{
             body: JSON.stringify({username:username})
         }).then(res => res.json())
         .then(data => {
+            console.log(data)
             userFound = {id:data.id,username:data.username,email:data.email,password:data.password_hash,characters:[]}
         })
         .catch(err => console.log(err))        
         return userFound
     }
-
 }
 
 const db = Object.freeze(new DBHandler())

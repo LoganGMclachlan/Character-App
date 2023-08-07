@@ -75,9 +75,17 @@ app.post('/deleteCharacter', (req,res) => {
     return genericQuery(sql,message,res)
 })
 
-// finds and returns all character data
+// finds and returns all character data with given user id
 app.get('/getCharacters', (req, res) => {
-    db.query("SELECT * FROM characters", (err,data) => {
+    return db.query(`SELECT * FROM characters WHERE user_id = '${req.body.userId}'`, (err,data) => {
+        if (err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+// finds the user with a given username
+app.get('/findUser', (req,res) => {
+    return db.query(`SELECT * FROM users WHERE username = '${req.body.username}'`, (err,data) => {
         if (err) return res.json(err)
         return res.json(data)
     })

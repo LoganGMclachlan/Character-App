@@ -144,6 +144,14 @@ export default function App() {
     }
   }
 
+  // updates a character with new data
+  function updateCharacter(updatedCharacter){
+      // deletes old character
+      db.deleteCharacter(characterSelected.id)
+      // adds new character with new info
+      db.addCharacter(updatedCharacter.getInsertQuery(currentUser.id))
+  }
+
   return (
     <>
       <Header user={currentUser} showLogin={setLoginFormVisable}
