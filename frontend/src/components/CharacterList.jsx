@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 export default function CharacterList({characters,selectChar,addCharacter}){
     const [charName, setCharName] = useState("")
-    console.log(characters)
 
     function hanldeNewChar(e){
         e.preventDefault()

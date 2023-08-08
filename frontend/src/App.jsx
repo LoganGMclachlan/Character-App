@@ -40,14 +40,14 @@ export default function App() {
   }, [currentUser])
 
 
-  function register(username, email, password) {
+  async function register(username, email, password) {
     const newUser = {
       id: crypto.randomUUID(),
       username: username, email: email,
       password_hash: hashPassword(password), characters: []
     }
     // trys to add user to database
-    const error = db.addUser(newUser)
+    const error = await db.addUser(newUser)
     if (error) {
       alert("User with entered name or email already exists")
     }
@@ -78,7 +78,6 @@ export default function App() {
     if (userFound !== undefined && hashPassword(password) === userFound.password_hash) {
       // fetches any characters that user might have
       userFound.characters = await db.getCharacters(userFound.id)
-      console.log(userFound.characters)
       setCurrentUser(userFound)
       setLoginFormVisable(false)
     }

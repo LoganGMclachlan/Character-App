@@ -3,8 +3,8 @@ import './styles.css'
 export default function CharacterForm({character}){
     return(
         <>
-            <h3>{character.name}</h3>
-            <h4>Level {character.level} {character.class}</h4>
+            <h3>{character.char_name}</h3>
+            <h4>Level {character.char_level} {character.class}</h4>
         </>
     )
 }

@@ -44,7 +44,7 @@ function genericQuery(sql,message,res){
 }
 
 app.post('/addUser', (req,res) => {
-    const sql = `INSERT INTO users VALUES ('${req.body.id}','${req.body.username}','${req.body.email}','${req.body.password}')`
+    const sql = `INSERT INTO users VALUES ('${req.body.id}','${req.body.username}','${req.body.email}','${req.body.password_hash}')`
     const message = `New user "${req.body.username}" added to db`
     return genericQuery(sql,message,res)
 
