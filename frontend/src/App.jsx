@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import hasher from 'crypto'
 import './components/styles.css'
+
 import Header from './components/Header'
-import CharacterList from './components/CharacterList'
 import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
-import CharacterForm from './components/CharacterForm'
-import UserDetails from './components/UserDetails'
+const CharacterList = lazy(() => import('./components/CharacterList'))
+const CharacterForm = lazy(() => import('./components/CharacterForm'))
+const UserDetails = lazy(() => import('./components/UserDetails'))
+
 import Character from './Character'
 import db from './DBHandler'
 
@@ -39,32 +41,27 @@ export default function App() {
 
 
   function register(username,email,password){
-    // creates user object
     const newUser = {id: crypto.randomUUID(),
       username: username, email: email,
       password_hash: hashPassword(password), characters: []
     }
     // trys to add user to database
     const error = db.addUser(newUser)
-    // if an error is returned alert the user
     if(error){
       alert("User with entered name or email already exists")
     }
     else{
-      // sets current user and sends success message
       setCurrentUser(newUser)
       setLoginFormVisable(false)
       alert("Account created successfuly")
     }
   }
 
-  // takes in a password and returnd a hashed version of it
   function hashPassword(password){
     return hasher.createHash('sha256').update(password).digest('hex')
   }
 
   function deleteUser(id){
-    // makes user confirm before deleting an account
     if(window.confirm("are you sure you want to delete this account?")){
       db.deleteUser({id:id,username:currentUser.username})
       setCurrentUser(null)
@@ -74,11 +71,9 @@ export default function App() {
     }
   }
 
-  // logs a user into their account
   async function login(username,password){
     // trys to find a user with entered username 
     let userFound = await db.findUser(username)
-    // checks if user was found then compares passwords
     if(userFound !== undefined && hashPassword(password) === userFound.password_hash){
       // fetches any characters that user might have
       userFound.characters = await db.getCharacters(userFound.id)
@@ -90,16 +85,13 @@ export default function App() {
   }
   }
 
-  // changes username of a user with given id
   async function updateUsername(id,newUsername){
     // trys to update username
     const error = await db.updatedUsername({id:id,username:newUsername})
-    // if an error is returned alert the user
     if(error){
       alert("User with entered name already exists")
     }
     else{
-      // updates current user
       setCurrentUser(user => {return{...user,username:newUsername}})
       alert("username updated successfuly")
     }
@@ -108,37 +100,28 @@ export default function App() {
   async function updateEmail(id,newEmail){
     // trys to update email
     const error = await db.updatedEmail({id:id,email:newEmail})
-    // if an error is returned alert the user
     if(error){
       alert("User with entered email already exists")
     }
     else{
-      // updates current user
       setCurrentUser(user => {return{...user,email:newEmail}})
       alert("email updated successfuly")
     }
   }
 
-  // logs user out of their account
   function logout(){
     setCurrentUser(null)
     setUserFormVisable(false)
     setCharacterSelected(null)
   }
 
-  // creates a new character
   function addCharacter(charName){
-    // creates character with entered name
     const newChar = new Character(charName)
-    // adds character to current user list
     setCurrentUser(currentUser.characters.push(newChar))
-    // adds character to database
     db.addCharacter({sql:newChar.getInsertQuery(currentUser.id)})
   }
 
-  // removes a character from a users list
   function deleteCharacter(id){
-    // confirms user wants to delete selected character
     if(window.confirm("are you sure you want to delete this character?")){
       setCurrentUser(user => {return{...user,characters:characters.filter(char => {if(char.id !== id)return char})}})
       db.deleteCharacter({id:id})
@@ -146,7 +129,6 @@ export default function App() {
     }
   }
 
-  // updates a character with new data
   function updateCharacter(updatedCharacter){
       // deletes old character
       db.deleteCharacter(characterSelected.id)
@@ -162,8 +144,10 @@ export default function App() {
       <div className='left-column'>
         <h3 className='left-column-title'>Characters</h3>
         {currentUser
-          ? <CharacterList characters={currentUser.characters} addCharacter={addCharacter}
-            selectChar={char => {setUserFormVisable(false);setCharacterSelected(char);}}/>
+          ? <Suspense fallback={<p>Loading Characters...</p>}>
+              <CharacterList characters={currentUser.characters} addCharacter={addCharacter}
+              selectChar={char => {setUserFormVisable(false);setCharacterSelected(char);}}/>
+            </Suspense>
           : <p><b onClick={() => {setLoginFormVisable(true)}}>login </b>
             to view and create characters.</p>
         }
@@ -172,7 +156,7 @@ export default function App() {
       {characterSelected &&
         <div className='character-form'>
           <button className='x-btn' onClick={() => {setCharacterSelected(null)}}>X</button>
-          <CharacterForm character={characterSelected}/>
+          <Suspense fallback={<p>Loading Character...</p>}><CharacterForm character={characterSelected}/></Suspense>
         </div>
       }
 
@@ -187,8 +171,10 @@ export default function App() {
       {userFormVisable && (
           <div className='small-form'>
             <button className='x-btn'onClick={() => {setUserFormVisable(false)}}>X</button>
-            <UserDetails updateUsername={updateUsername} updateEmail={updateEmail}
-            logout={logout} deleteUser={deleteUser} user={currentUser}/>
+            <Suspense fallback={<p>Loading User Info...</p>}>
+              <UserDetails updateUsername={updateUsername} updateEmail={updateEmail}
+              logout={logout} deleteUser={deleteUser} user={currentUser}/>
+            </Suspense>
           </div>)
       }
     </>
