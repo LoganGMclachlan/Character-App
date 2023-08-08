@@ -1,3 +1,5 @@
+import Character from "./Character"
+
 let instance
 
 // singleton class with functions to interact with the database
@@ -44,17 +46,17 @@ class DBHandler{
 
     // gets character data for a given user id
     async getCharacters(id){
-        let characters = []
         return await fetch("http://localhost:8081/getCharacters",{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify({userId:id})
         }).then(res => res.json())
         .then(data => {
-            data.forEach(char => characters.push(char))
+            let characters = []
+            data.forEach(char => {characters.push(char)})
             return characters
-        })
-        .catch(err => console.log(err))   
+            }
+        ).catch(err => console.log(err))   
     }
 
     // gets the user with given username

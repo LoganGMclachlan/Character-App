@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 export default function CharacterList({characters,selectChar,addCharacter}){
     const [charName, setCharName] = useState("")
+    console.log(characters)
 
     function hanldeNewChar(e){
         e.preventDefault()
@@ -19,10 +20,11 @@ export default function CharacterList({characters,selectChar,addCharacter}){
             {characters.length === 0 && "You have no characters"}
             <ul className="list">
                 {characters.map(character => {
-                    return (<CharacterItem character={character}
+                    return (<CharacterItem character={character} key={character.id}
                         selectChar={() => selectChar(character)}/>)
                 })}
             </ul>
+
             {characters.length <= 5 &&
                 <form onSubmit={hanldeNewChar}>
                     <label>Name:</label>
