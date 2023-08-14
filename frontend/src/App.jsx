@@ -78,6 +78,11 @@ export default function App() {
     if (userFound !== undefined && hashPassword(password) === userFound.password_hash) {
       // fetches any characters that user might have
       userFound.characters = await db.getCharacters(userFound.id)
+      userFound.characters.map(char => {
+        char.actions = []
+        char.features = []
+        return char
+      })
       setCurrentUser(userFound)
       setLoginFormVisable(false)
     }
@@ -129,10 +134,43 @@ export default function App() {
   }
 
   function updateCharacter(updatedCharacter) {
-    // deletes old character
+    // TODO : add deleteAction, deleteFeature, addAction, and addFeature routes to server.js. Also add dbHandler methods for each
+    // deletes old character and its actions and features from db
     db.deleteCharacter(characterSelected.id)
-    // adds new character with new info
+    characterSelected.actions.foreach(action => {
+      db.deleteAction(action.id)
+    })
+    characterSelected.features.foreach(feature => {
+      db.deleteFeature(feature.id)
+    })
+    // saves updated character, actions, and features to db
     db.addCharacter(updatedCharacter.getInsertQuery(currentUser.id))
+    updatedCharacter.actions.foreach(action => {
+      db.addAction(action)
+    })
+    updatedCharacter.features.foreach(feature => {
+      db.addFeature(feature)
+    })
+  }
+
+  function addAction(newAction){
+    let updatedChar
+    setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
+      if (char.id !== characterSelected.id) return char
+      updatedChar = {...char,actions:[...char.actions,newAction]}
+      setCharacterSelected(updatedChar)
+      return updatedChar
+    })})
+  }
+
+  function addFeature(newFeature){
+    let updatedChar
+    setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
+      if (char.id !== characterSelected.id) return char
+      updatedChar = {...char,features:[...char.actions,newFeature]}
+      setCharacterSelected(updatedChar)
+      return updatedChar
+    })})
   }
 
   return (
@@ -155,7 +193,10 @@ export default function App() {
       {characterSelected &&
         <div className='character-form'>
           <button className='x-btn' onClick={() => { setCharacterSelected(null) }}>X</button>
-          <Suspense fallback={<p>Loading Character...</p>}><CharacterForm character={characterSelected} /></Suspense>
+          <Suspense fallback={<p>Loading Character...</p>}>
+            <CharacterForm character={characterSelected} deleteChar={deleteCharacter} save={updateCharacter}
+            addAction={addAction} addFeature={addFeature}/>
+          </Suspense>
         </div>
       }
 

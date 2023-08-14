@@ -1,7 +1,9 @@
 import './styles.css'
 import { useState } from "react";
+import ActionForm from "./ActionForm"
+import Action from "./Action"
 
-export default function CharacterForm({character}){
+export default function CharacterForm({character, deleteChar, save, addAction, addFeature}){
     const [char, setChar] = useState(character)
 
     return(
@@ -10,6 +12,7 @@ export default function CharacterForm({character}){
             <div>
                 <b><input type="text" value={char.char_name} className='char-title'
                 onChange={e => setChar(char => {return {...char,char_name:e.target.value}})}/></b>
+
                 Level: <input type="number" value={char.char_level} className='char-number'
                 onChange={e => setChar(char => {return {...char,char_level:e.target.value}})}/>
                 Class: <input type="text" value={char.char_class} className='char-input'
@@ -17,41 +20,42 @@ export default function CharacterForm({character}){
                 Background: <input type="text" value={char.background} className='char-input'
                 onChange={e => setChar(char => {return {...char,background:e.target.value}})}/>
             </div>
+
             <table className='char-table'>
             <tr>
             <td>
-            <ul className='char-list'>
-                <li>
-                    <label>STRENGTH:</label>
-                    <input type="number" value={char.strength} className='char-number'
-                    onChange={e => setChar(char => {return {...char,strength:e.target.value}})}/>
-                </li>
-                <li>
-                    <label>DEXTERITY:</label>
-                    <input type="number" value={char.dexterity} className='char-number'
-                    onChange={e => setChar(char => {return {...char,dexterity:e.target.value}})}/>
-                </li>
-                <li>
-                    <label>CONSTITUTION:</label>
-                    <input type="number" value={char.constitution} className='char-number'
-                    onChange={e => setChar(char => {return {...char,constitution:e.target.value}})}/>
-                </li>
-                <li>
-                    <label>INTELLIGENCE:</label>
-                    <input type="number" value={char.inteligence} className='char-number'
-                    onChange={e => setChar(char => {return {...char,inteligence:e.target.value}})}/>
-                </li>
-                <li>
-                    <label>WISDOM:</label>
-                    <input type="number" value={char.wisdom} className='char-number'
-                    onChange={e => setChar(char => {return {...char,wisdom:e.target.value}})}/>
-                </li>
-                <li>
-                    <label>CHARISMA:</label>
-                    <input type="number" value={char.charisma} className='char-number'
-                    onChange={e => setChar(char => {return {...char,charisma:e.target.value}})}/>
-                </li>
-            </ul>
+                <ul className='char-list'>
+                    <li>
+                        <label>STRENGTH:</label>
+                        <input type="number" value={char.strength} className='char-number'
+                        onChange={e => setChar(char => {return {...char,strength:e.target.value}})}/>
+                    </li>
+                    <li>
+                        <label>DEXTERITY:</label>
+                        <input type="number" value={char.dexterity} className='char-number'
+                        onChange={e => setChar(char => {return {...char,dexterity:e.target.value}})}/>
+                    </li>
+                    <li>
+                        <label>CONSTITUTION:</label>
+                        <input type="number" value={char.constitution} className='char-number'
+                        onChange={e => setChar(char => {return {...char,constitution:e.target.value}})}/>
+                    </li>
+                    <li>
+                        <label>INTELLIGENCE:</label>
+                        <input type="number" value={char.inteligence} className='char-number'
+                        onChange={e => setChar(char => {return {...char,inteligence:e.target.value}})}/>
+                    </li>
+                    <li>
+                        <label>WISDOM:</label>
+                        <input type="number" value={char.wisdom} className='char-number'
+                        onChange={e => setChar(char => {return {...char,wisdom:e.target.value}})}/>
+                    </li>
+                    <li>
+                        <label>CHARISMA:</label>
+                        <input type="number" value={char.charisma} className='char-number'
+                        onChange={e => setChar(char => {return {...char,charisma:e.target.value}})}/>
+                    </li>
+                </ul>
             </td>
             <td>
                 HP: <input type="number" value={char.current_hp} className='char-number'
@@ -95,16 +99,125 @@ export default function CharacterForm({character}){
             </td>
             <td>
                 Inventory<br/>
-                <input type="textarea" value={char.inventory} className='char-area'
+                <textarea value={char.inventory} className='char-area'
                 onChange={e => setChar(...char,inventory=e.target.value)}/>
             </td>
             </tr>
+
             <tr>
-                
+            <td>
+                <ul className='char-list'>
+                <li>
+                    <label>Acrobatics:</label>
+                    <input type="number" value={char.acrobatics} className='char-number'
+                    onChange={e => setChar(...char,acrobatics=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Animal Handling:</label>
+                    <input type="number" value={char.animalHandling} className='char-number'
+                    onChange={e => setChar(...char,animalHandling=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Arcana:</label>
+                    <input type="number" value={char.arcana} className='char-number'
+                    onChange={e => setChar(...char,arcana=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Athletics:</label>
+                    <input type="number" value={char.athletics} className='char-number'
+                    onChange={e => setChar(...char,athletics=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Deception:</label>
+                    <input type="number" value={char.deception} className='char-number'
+                    onChange={e => setChar(...char,deception=e.target.value)}/>
+                </li>
+                <li>
+                    <label>History:</label>
+                    <input type="number" value={char.history} className='char-number'
+                    onChange={e => setChar(...char,history=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Insight:</label>
+                    <input type="number" value={char.insight} className='char-number'
+                    onChange={e => setChar(...char,insight=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Intimidation:</label>
+                    <input type="number" value={char.intimidation} className='char-number'
+                    onChange={e => setChar(...char,intimidation=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Investigation:</label>
+                    <input type="number" value={char.investigation} className='char-number'
+                    onChange={e => setChar(...char,investigation=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Medicine:</label>
+                    <input type="number" value={char.medicine} className='char-number'
+                    onChange={e => setChar(...char,medicine=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Nature:</label>
+                    <input type="number" value={char.nature} className='char-number'
+                    onChange={e => setChar(...char,nature=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Perception:</label>
+                    <input type="number" value={char.perception} className='char-number'
+                    onChange={e => setChar(...char,perception=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Performance:</label>
+                    <input type="number" value={char.performance} className='char-number'
+                    onChange={e => setChar(...char,performance=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Persuasion:</label>
+                    <input type="number" value={char.persuation} className='char-number'
+                    onChange={e => setChar(...char,persuation=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Religion:</label>
+                    <input type="number" value={char.religion} className='char-number'
+                    onChange={e => setChar(...char,religion=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Sleight of Hand:</label>
+                    <input type="number" value={char.sleightOfHand} className='char-number'
+                    onChange={e => setChar(...char,sleightOfHand=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Stealth:</label>
+                    <input type="number" value={char.stealth} className='char-number'
+                    onChange={e => setChar(...char,stealth=e.target.value)}/>
+                </li>
+                <li>
+                    <label>Survival:</label>
+                    <input type="number" value={char.survival} className='char-number'
+                    onChange={e => setChar(...char,survival=e.target.value)}/>
+                </li>
+                </ul>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Action</td>
+                        <td>Bonus/DC</td>
+                        <td>Damage</td>
+                        <td>Notes</td>
+                    </tr>
+                    {char.actions.map(action => {return(
+                        <Action actionIn={action} key={action.id}/>
+                    )})}
+                </table>
+                <ActionForm addAction={addAction}/>    
+            </td>
             </tr>
             </table>
             
-            <button className='red-btn'>Save</button>
+            <button className='red-btn' onClick={() => deleteChar(char.id)}>Delete</button>
+            <button className='red-btn' onClick={() => save(char)}>Save</button>
         </form>
         </>
     )

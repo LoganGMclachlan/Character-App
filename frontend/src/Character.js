@@ -66,66 +66,6 @@ export default class Character{
         }]
     }
 
-    setAction(actions){
-        this.actions=actions
-    }
-
-    setFeatures(features){
-        this.features=this.features
-    }
-
-    // sets all character properties
-    setCharacter(char){
-        this.id=char.id
-        this.char_name=char.char_name
-        this.char_level=char.char_level
-        this.char_class=char.char_class
-        this.background=char.background
-        
-        this.strength=char.strength
-        this.dexterity=char.dexterity
-        this.constitution=char.constitution
-        this.inteligence=char.inteligence
-        this.wisdom=char.wisdom
-        this.charisma=char.charisma
-
-        this.acrobatics=char.acrobatics
-        this.animalHandling=char.animalHandling
-        this.arcana=char.arcana
-        this.athletics=char.athletics
-        this.deception=char.deception
-        this.history=char.history
-        this.insight=char.insight
-        this.intimidation=char.intimidation
-        this.investigation=char.investigation
-        this.medicine=char.medicine
-        this.nature=char.nature
-        this.perception=char.perception
-        this.performance=char.performance
-        this.persuation=char.persuation
-        this.religion=char.religion
-        this.sleigh_of_hand=char.sleigh_of_hand
-        this.stealth=char.stealth
-        this.survival=char.survival
-        
-        this.max_hp=char.max_hp
-        this.current_hp=char.current_hp
-        this.temp_hp=char.temp_hp
-        this.hit_dice_type=char.hit_dice_type
-        this.hit_dice_count=char.hit_dice_count
-
-        this.proficiency_bonus=char.proficiency_bonus
-        this.ac=char.ac
-        this.speed=char.speed
-        this.initiative=char.initiative
-
-        this.deathsave_success=char.deathsave_success
-        this.deathsave_fail=char.deathsave_fail
-        
-        this.inventory=char.inventory
-        this.proficiences=char.proficiences
-    }
-
     /* method to return a string query that will insert
     /  the character into the db */
     getInsertQuery(userId){

@@ -1,20 +1,24 @@
 import './styles.css'
 import { useState } from "react";
 
-export default function ActionForm({character}){
-    const [act, setAct] = useState(character.actions);
-    let temp = {id:crypto.randomUUID(), title:"", bonusOrDc:0, range:"", damage:0, notes:""};
+export default function ActionForm({addAction}){
+    const [title, setTitle] = useState("New Action")
+
+    function handleNewAction(e){
+        e.preventDefault()
+        if(title !== ""){
+            let newAction = {id:crypto.randomUUID(), title:title, bonusOrDc:0, range:"", damage:0, notes:""}
+            addAction(newAction)
+        }
+        else(alert("Input a action title first"))
+    }
+
     return(
         <>
-            <h3>{character.name}</h3>
-            <h4>Level {character.level} {character.charClass}</h4>
-            <form>
-                <h2>Add Action</h2>
-                {/*title*/}
-                <label htmlFor="title">Title:</label><br/>
-                <input type="text" value={temp.title}/>
-                onChange={(e) => temp.title = e.target.value}<br/>
-            </form>
+            <label>Title:</label>
+            <input type="text" value={title}
+            onChange={e => setTitle(e.target.value)}/>
+            <button onClick={e => handleNewAction(e)} className='red-btn'>Add</button>
         </>
     )
 }
