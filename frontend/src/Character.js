@@ -4,7 +4,7 @@ export default class Character{
         this.id=crypto.randomUUID()
         this.char_name=name
         this.char_level=1
-        this.class=""
+        this.char_class=""
         this.background=""
         
         this.strength=0
@@ -45,7 +45,7 @@ export default class Character{
         this.initiative=0
 
         this.deathsave_success=0
-        this.deathssaves_fail=0
+        this.deathsavez_fail=0
         
         this.inventory=""
         this.proficiences="common,dagger"
@@ -79,7 +79,7 @@ export default class Character{
         this.id=char.id
         this.char_name=char.char_name
         this.char_level=char.char_level
-        this.class=char.class
+        this.char_class=char.char_class
         this.background=char.background
         
         this.strength=char.strength
@@ -120,7 +120,7 @@ export default class Character{
         this.initiative=char.initiative
 
         this.deathsave_success=char.deathsave_success
-        this.deathssaves_fail=char.deathssaves_fail
+        this.deathsave_fail=char.deathsave_fail
         
         this.inventory=char.inventory
         this.proficiences=char.proficiences
@@ -130,7 +130,7 @@ export default class Character{
     /  the character into the db */
     getInsertQuery(userId){
         return `INSERT INTO Characters VALUES (` +
-        `'${this.id}','${this.char_name}','${this.class}',${this.char_level},'${this.background}',` +
+        `'${this.id}','${this.char_name}','${this.char_class}',${this.char_level},'${this.background}',` +
         `${this.strength},${this.dexterity},${this.constitution},${this.inteligence},${this.wisdom},${this.charisma},` +
         `${this.acrobatics},${this.animalHandling},${this.arcana},${this.athletics},` +
         `${this.deception},${this.history},${this.insight},${this.intimidation},` +
@@ -139,7 +139,7 @@ export default class Character{
         `${this.stealth},${this.survival},` +
         `${this.max_hp},${this.current_hp},${this.temp_hp},` +
         `'${this.hit_dice_type}',${this.hit_dice_count},${this.proficiency_bonus},${this.ac},` +
-        `${this.speed},${this.initiative},${this.deathsave_success},${this.deathssaves_fail},` +
+        `${this.speed},${this.initiative},${this.deathsave_success},${this.deathsave_fail},` +
         `'${this.inventory}','${this.proficiences}','${userId}')`
     }
 }

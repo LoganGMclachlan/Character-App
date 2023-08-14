@@ -129,3 +129,42 @@ b{
   padding:8px;
   min-height:480px
 }
+
+.char-title{
+  max-width: 200px;
+  margin:5px;
+  border:none;
+  font-size: large;
+  text-align: center;
+}
+
+.char-list{
+  list-style: none;
+  margin-left:-30px;
+  margin-top: 0px;
+}
+
+.char-number{
+  max-width: 35px;
+  margin:5px;
+  border:none;
+  border-bottom: 1px grey solid;
+}
+
+.char-input{
+  max-width: 180px;
+  margin:5px;
+  border:none;
+  border-bottom: 1px grey solid;
+}
+
+.char-table tr td{
+  border:0px black solid;
+  padding:4px;
+  text-align: center;
+}
+
+.char-area{
+  height:190px;
+  width:320px
+}
