@@ -69,6 +69,22 @@ class DBHandler{
         .then(data => {console.log(data[0]);return data[0]})
         .catch(err => {console.log(err);return undefined})
     }
+
+    async addAction(action){
+        return await this.genericPost("addAction",action)
+    }
+
+    async addFeature(feature){
+        return await this.genericPost("addFeature",feature)
+    }
+
+    async deleteAction(id){
+        return await this.genericPost("deleteAction",id)
+    }
+
+    async deleteFeature(id){
+        return await this.genericPost("deleteFeature",id)
+    }
 }
 
 const db = Object.freeze(new DBHandler())

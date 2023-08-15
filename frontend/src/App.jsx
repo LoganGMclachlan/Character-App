@@ -125,39 +125,49 @@ export default function App() {
     db.addCharacter({ sql: newChar.getInsertQuery(currentUser.id) })
   }
 
-  function deleteCharacter(id) {
+  function deleteCharacter(e,id) {
+    e.preventDefault()
     if (window.confirm("are you sure you want to delete this character?")) {
-      setCurrentUser({ ...currentUser, characters:[...currentUser.characters.filter(char => char.id !== id)]})
-      db.deleteCharacter({ id: id })
-      // TODO: delete actions and features from db with char id
+      // deletes actions
+      characterSelected.actions.forEach(action => {
+        db.deleteAction({id:action.id})
+      })
+      // deletes features
+      characterSelected.features.forEach(feature => {
+        db.deleteFeature({id:feature.id})
+      })
+
       setCharacterSelected(null)
+      setCurrentUser({ ...currentUser, characters:currentUser.characters.filter(char => char.id !== id)})
+      db.deleteCharacter({ id: id })// deletes character
+      console.log("char deleted")
     }
   }
 
   function updateCharacter(updatedCharacter) {
-    // TODO : add deleteAction, deleteFeature, addAction, and addFeature routes to server.js. Also add dbHandler methods for each
     // deletes old character and its actions and features from db
     db.deleteCharacter(characterSelected.id)
-    characterSelected.actions.foreach(action => {
-      db.deleteAction(action.id)
+    characterSelected.actions.forEach(action => {
+      db.deleteAction({id:action.id})
     })
-    characterSelected.features.foreach(feature => {
-      db.deleteFeature(feature.id)
+    characterSelected.features.forEach(feature => {
+      db.deleteFeature({id:feature.id})
     })
+
     // saves updated character, actions, and features to db
     db.addCharacter(updatedCharacter.getInsertQuery(currentUser.id))
-    updatedCharacter.actions.foreach(action => {
-      db.addAction(action)
+    updatedCharacter.actions.forEach(action => {
+      db.addAction({action:action})
     })
-    updatedCharacter.features.foreach(feature => {
-      db.addFeature(feature)
+    updatedCharacter.features.forEach(feature => {
+      db.addFeature({feature:feature})
     })
   }
 
   function addAction(newAction){
     setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
       if (char.id !== characterSelected.id) return char
-      db.addAction({action:newAction,userId:currentUser.id})
+      db.addAction({action:newAction,charId:characterSelected.id})
       return {...char,actions:[...char.actions,newAction]}
     })})
   }
@@ -173,7 +183,7 @@ export default function App() {
   function addFeature(newFeature){
     setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
       if (char.id !== characterSelected.id) return char
-      db.addFeature({feature:newFeature,userId:currentUser.id})
+      db.addFeature({feature:newFeature,userId:characterSelected.id})
       return {...char,features:[...char.actions,newFeature]}
     })})
   }

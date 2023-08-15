@@ -7,7 +7,7 @@ export default function ActionForm({addAction}){
     function handleNewAction(e){
         e.preventDefault()
         if(title !== ""){
-            let newAction = {id:crypto.randomUUID(), title:title, bonusOrDc:0, range:"", damage:0, notes:""}
+            let newAction = {id:crypto.randomUUID(),title:title,bonus_or_dc:0,action_range:"",damage:0,notes:""}
             addAction(newAction)
         }
         else(alert("Input a action title first"))

@@ -217,27 +217,31 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                 </li>
                 </ul>
             </td>
+            <td>
+                Features
+            </td>
             </tr>
             </table>
-                Actions
-                <table>
+                <div className='char-actions'>
+                    Actions
+                    <table>
                     <tr>
-                        <td>Action</td>
-                        <td>Bonus/DC</td>
-                        <td>Range</td>
-                        <td>Damage</td>
-                        <td>Notes</td>
+                        <td className='char-actions-heading'>Action</td>
+                        <td className='char-actions-heading'>Bonus/DC</td>
+                        <td className='char-actions-heading'>Range</td>
+                        <td className='char-actions-heading'>Damage</td>
+                        <td className='char-actions-heading'>Notes</td>
                     </tr>
                     {char.actions.map(action => {return(
-                        <Action actionIn={action} updateActions={updateActions} removeAction={removeAction} key={action.id} />
+                        <Action actionIn={action} updateActions={updateActions} removeAction={removeAction} key={action.id}/>
                     )})}
-                </table>
-                <ActionForm addAction={newAction => {
-                    setChar({...char,actions:[...char.actions,newAction]})
-                    addAction(newAction)}}/>    
-                Features
-            
-            <button className='red-btn' onClick={() => deleteChar(char.id)}>Delete</button>
+                    </table>
+                    <ActionForm addAction={newAction => {
+                        setChar({...char,actions:[...char.actions,newAction]})
+                        addAction(newAction)}}/><br/>
+                </div>
+                
+            <button className='red-btn' onClick={e => deleteChar(e,char.id)}>Delete</button>
             <button className='red-btn' onClick={() => save(char)}>Save</button>
         </form>
         </>

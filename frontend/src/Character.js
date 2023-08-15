@@ -53,17 +53,13 @@ export default class Character{
         this.actions=[{
             id:crypto.randomUUID,
             title:"Unarmed Strike",
-            bonusOrDC:2,
-            range:"5ft",
+            bonus_or_dc:2,
+            action_range:"5ft",
             damage:1,
             notes:""
         }]
         
-        this.features=[{
-            id:crypto.randomUUID,
-            title:"Feature Title",
-            description:"Add all your new features here"
-        }]
+        this.features=[]
     }
 
     /* method to return a string query that will insert

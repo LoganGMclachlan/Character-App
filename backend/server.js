@@ -79,6 +79,35 @@ app.post('/deleteCharacter', (req,res) => {
     return genericQuery(sql,message,res)
 })
 
+app.post('/addAction', (req,res) => {
+    const sql = `INSERT INTO actions VALUES ('${req.body.action.id}',`
+                + `'${req.body.action.title}',${req.body.action.bonus_or_dc},`
+                + `'${req.body.action.action_range}',${req.body.action.damage},`
+                + `'${req.body.action.notes}','${req.body.charId}')`
+    const message = `Action "${req.body.action.title}" added from db`
+    return genericQuery(sql,message,res)
+})
+
+app.post('/deleteAction', (req,res) => {
+    const sql = `DELETE FROM actions WHERE id='${req.body.id}'`
+    const message = `Action deleted from db`
+    return genericQuery(sql,message,res)
+})
+
+app.post('/addFeature', (req,res) => {
+    const sql = `INSERT INTO features VALUES ('${req.body.feature.id}',`
+                + `'${req.body.feature.title}',${req.body.feature.feature_description},`
+                + `'${req.body.charId}')`
+    const message = `Feature "${req.body.feature.title}" added from db`
+    return genericQuery(sql,message,res)
+})
+
+app.post('/deleteFeature', (req,res) => {
+    const sql = `DELETE FROM actions WHERE id='${req.body.id}'`
+    const message = `Feature deleted from db`
+    return genericQuery(sql,message,res)
+})
+
 // finds and returns all character data with given user id
 app.post('/getCharacters', (req, res) => {
     return db.query(`SELECT * FROM characters WHERE user_id = '${req.body.userId}'`, (err,data) => {
