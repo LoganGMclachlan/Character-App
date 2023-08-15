@@ -129,6 +129,7 @@ export default function App() {
     if (window.confirm("are you sure you want to delete this character?")) {
       setCurrentUser({ ...currentUser, characters:[...currentUser.characters.filter(char => char.id !== id)]})
       db.deleteCharacter({ id: id })
+      // TODO: delete actions and features from db with char id
       setCharacterSelected(null)
     }
   }
@@ -159,6 +160,7 @@ export default function App() {
       if (char.id !== characterSelected.id) return char
       updatedChar = {...char,actions:[...char.actions,newAction]}
       setCharacterSelected(updatedChar)
+      // TODO: add newAction to db
       return updatedChar
     })})
   }
@@ -169,6 +171,7 @@ export default function App() {
       if (char.id !== characterSelected.id) return char
       updatedChar = {...char,features:[...char.actions,newFeature]}
       setCharacterSelected(updatedChar)
+      // TODO: add newFeature to db
       return updatedChar
     })})
   }
@@ -195,7 +198,7 @@ export default function App() {
           <button className='x-btn' onClick={() => { setCharacterSelected(null) }}>X</button>
           <Suspense fallback={<p>Loading Character...</p>}>
             <CharacterForm character={characterSelected} deleteChar={deleteCharacter} save={updateCharacter}
-            addAction={addAction} addFeature={addFeature}/>
+            addAction={addAction} addFeature={addFeature} />
           </Suspense>
         </div>
       }

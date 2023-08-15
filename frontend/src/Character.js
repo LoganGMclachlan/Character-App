@@ -15,7 +15,7 @@ export default class Character{
         this.charisma=0
 
         this.acrobatics=0
-        this.animalHandling=0
+        this.animal_handling=0
         this.arcana=0
         this.athletics=0
         this.deception=0
@@ -45,7 +45,7 @@ export default class Character{
         this.initiative=0
 
         this.deathsave_success=0
-        this.deathsavez_fail=0
+        this.deathsave_fail=0
         
         this.inventory=""
         this.proficiences="common,dagger"
@@ -72,7 +72,7 @@ export default class Character{
         return `INSERT INTO Characters VALUES (` +
         `'${this.id}','${this.char_name}','${this.char_class}',${this.char_level},'${this.background}',` +
         `${this.strength},${this.dexterity},${this.constitution},${this.inteligence},${this.wisdom},${this.charisma},` +
-        `${this.acrobatics},${this.animalHandling},${this.arcana},${this.athletics},` +
+        `${this.acrobatics},${this.animal_handling},${this.arcana},${this.athletics},` +
         `${this.deception},${this.history},${this.insight},${this.intimidation},` +
         `${this.investigation},${this.medicine},${this.nature},${this.perception},` +
         `${this.performance},${this.persuation},${this.religion},${this.sleight_of_hand},` +

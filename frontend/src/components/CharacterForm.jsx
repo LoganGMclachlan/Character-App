@@ -6,6 +6,19 @@ import Action from "./Action"
 export default function CharacterForm({character, deleteChar, save, addAction, addFeature}){
     const [char, setChar] = useState(character)
 
+    function addNewFeature(newFeature){
+        setChar({...char,features:[...char.features,newFeature]})
+        addFeature(newFeature)
+    }
+
+    function updateActions(updatedAction){
+        setChar({...char,actions:[...char.actions.map(action => {
+            if(action.id !== updateActions.id) return action
+            console.log(updatedAction.id)
+            return updatedAction
+        })]})
+    }
+
     return(
         <>
         <form className='char-form'>
@@ -100,7 +113,7 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
             <td>
                 Inventory<br/>
                 <textarea value={char.inventory} className='char-area'
-                onChange={e => setChar(...char,inventory=e.target.value)}/>
+                onChange={e => setChar(char => {return {...char,inventory:e.target.value}})}/>
             </td>
             </tr>
 
@@ -110,111 +123,114 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                 <li>
                     <label>Acrobatics:</label>
                     <input type="number" value={char.acrobatics} className='char-number'
-                    onChange={e => setChar(...char,acrobatics=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,acrobatics:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Animal Handling:</label>
-                    <input type="number" value={char.animalHandling} className='char-number'
-                    onChange={e => setChar(...char,animalHandling=e.target.value)}/>
+                    <input type="number" value={char.animal_handling} className='char-number'
+                    onChange={e => setChar(char => {return {...char,animal_handling:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Arcana:</label>
                     <input type="number" value={char.arcana} className='char-number'
-                    onChange={e => setChar(...char,arcana=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,arcana:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Athletics:</label>
                     <input type="number" value={char.athletics} className='char-number'
-                    onChange={e => setChar(...char,athletics=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,athletics:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Deception:</label>
                     <input type="number" value={char.deception} className='char-number'
-                    onChange={e => setChar(...char,deception=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,deception:e.target.value}})}/>
                 </li>
                 <li>
                     <label>History:</label>
                     <input type="number" value={char.history} className='char-number'
-                    onChange={e => setChar(...char,history=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,history:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Insight:</label>
                     <input type="number" value={char.insight} className='char-number'
-                    onChange={e => setChar(...char,insight=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,insight:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Intimidation:</label>
                     <input type="number" value={char.intimidation} className='char-number'
-                    onChange={e => setChar(...char,intimidation=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,intimidation:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Investigation:</label>
                     <input type="number" value={char.investigation} className='char-number'
-                    onChange={e => setChar(...char,investigation=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,investigation:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Medicine:</label>
                     <input type="number" value={char.medicine} className='char-number'
-                    onChange={e => setChar(...char,medicine=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,medicine:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Nature:</label>
                     <input type="number" value={char.nature} className='char-number'
-                    onChange={e => setChar(...char,nature=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,nature:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Perception:</label>
                     <input type="number" value={char.perception} className='char-number'
-                    onChange={e => setChar(...char,perception=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,perception:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Performance:</label>
                     <input type="number" value={char.performance} className='char-number'
-                    onChange={e => setChar(...char,performance=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,performance:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Persuasion:</label>
                     <input type="number" value={char.persuation} className='char-number'
-                    onChange={e => setChar(...char,persuation=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,persuation:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Religion:</label>
                     <input type="number" value={char.religion} className='char-number'
-                    onChange={e => setChar(...char,religion=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,religion:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Sleight of Hand:</label>
-                    <input type="number" value={char.sleightOfHand} className='char-number'
-                    onChange={e => setChar(...char,sleightOfHand=e.target.value)}/>
+                    <input type="number" value={char.sleight_of_hand} className='char-number'
+                    onChange={e => setChar(char => {return {...char,sleight_of_hand:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Stealth:</label>
                     <input type="number" value={char.stealth} className='char-number'
-                    onChange={e => setChar(...char,stealth=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,stealth:e.target.value}})}/>
                 </li>
                 <li>
                     <label>Survival:</label>
                     <input type="number" value={char.survival} className='char-number'
-                    onChange={e => setChar(...char,survival=e.target.value)}/>
+                    onChange={e => setChar(char => {return {...char,survival:e.target.value}})}/>
                 </li>
                 </ul>
             </td>
-            <td>
+            </tr>
+            </table>
+                Actions
                 <table>
                     <tr>
                         <td>Action</td>
                         <td>Bonus/DC</td>
+                        <td>Range</td>
                         <td>Damage</td>
                         <td>Notes</td>
                     </tr>
                     {char.actions.map(action => {return(
-                        <Action actionIn={action} key={action.id}/>
+                        <Action actionIn={action} key={action.id} updateActions={updateActions}/>
                     )})}
                 </table>
-                <ActionForm addAction={addAction}/>    
-            </td>
-            </tr>
-            </table>
+                <ActionForm addAction={newAction => {
+                    setChar({...char,actions:[...char.actions,newAction]})
+                    addAction(newAction)}}/>    
+                Features
             
             <button className='red-btn' onClick={() => deleteChar(char.id)}>Delete</button>
             <button className='red-btn' onClick={() => save(char)}>Save</button>
