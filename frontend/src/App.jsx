@@ -155,24 +155,34 @@ export default function App() {
   }
 
   function addAction(newAction){
-    let updatedChar
     setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
       if (char.id !== characterSelected.id) return char
-      updatedChar = {...char,actions:[...char.actions,newAction]}
-      setCharacterSelected(updatedChar)
-      // TODO: add newAction to db
-      return updatedChar
+      db.addAction({action:newAction,userId:currentUser.id})
+      return {...char,actions:[...char.actions,newAction]}
+    })})
+  }
+
+  function deleteAction(id){
+    setCurrentUser({...currentUser,characters:currentUser.characters.map(char =>{
+      if (char.id !== characterSelected.id) return char
+      db.deleteAction({id:id})
+      return {...char,actions:[...char.actions.filter(action => action.id !== id)]}
     })})
   }
 
   function addFeature(newFeature){
-    let updatedChar
     setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
       if (char.id !== characterSelected.id) return char
-      updatedChar = {...char,features:[...char.actions,newFeature]}
-      setCharacterSelected(updatedChar)
-      // TODO: add newFeature to db
-      return updatedChar
+      db.addFeature({feature:newFeature,userId:currentUser.id})
+      return {...char,features:[...char.actions,newFeature]}
+    })})
+  }
+
+  function deleteFeature(id){
+    setCurrentUser({...currentUser,characters:currentUser.characters.map(char =>{
+      if (char.id !== characterSelected.id) return char
+      db.deleteFeature({id:id})
+      return {...char,features:[...char.features.filter(feature => feature.id !== id)]}
     })})
   }
 
@@ -198,7 +208,7 @@ export default function App() {
           <button className='x-btn' onClick={() => { setCharacterSelected(null) }}>X</button>
           <Suspense fallback={<p>Loading Character...</p>}>
             <CharacterForm character={characterSelected} deleteChar={deleteCharacter} save={updateCharacter}
-            addAction={addAction} addFeature={addFeature} />
+            addAction={addAction} addFeature={addFeature} deleteAction={deleteAction} deleteFeature={deleteFeature}/>
           </Suspense>
         </div>
       }
