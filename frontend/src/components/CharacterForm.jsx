@@ -41,8 +41,8 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
 
                 Level: <input type="number" value={char.char_level} className='char-number'
                 onChange={e => setChar({...char,char_level:e.target.value})}/>
-                Class: <input type="text" value={char.char_class} className='char-input'
-                onChange={e => setChar({...char,char_class:e.target.value})}/>
+                Class: <input type="text" value={char.class} className='char-input'
+                onChange={e => setChar({...char,class:e.target.value})}/>
                 Background: <input type="text" value={char.background} className='char-input'
                 onChange={e => setChar({...char,background:e.target.value})}/>
             </div>
@@ -88,7 +88,7 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                 onChange={e => setChar({...char,current_hp:e.target.value})}/>
                 /
                 <input type="number" value={char.max_hp} className='char-number'
-                onChange={e => setChar({...char,max_hp:e.target.value})}/>
+                onChange={e => setChar({...char,max_hp:e.target.value})}/><br/>
 
                 Temp HP: <input type="number" value={char.temp_hp} className='char-number'
                 onChange={e => setChar({...char,temp_hp:e.target.value})}/>
@@ -259,8 +259,8 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                         addAction(newAction)}}/><br/>
                 </div>
                 
-            <button className='red-btn' onClick={e => deleteChar(e,char.id)}>Delete</button>
-            <button className='red-btn' onClick={() => save(char)}>Save</button>
+            <button className='red-btn' onClick={e => {e.preventDefault(); deleteChar(char.id)}}>Delete</button>
+            <button className='red-btn' onClick={e => {e.preventDefault(); save(char)}}>Save</button>
         </form>
         </>
     )

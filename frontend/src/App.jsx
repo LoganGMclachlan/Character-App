@@ -39,6 +39,23 @@ export default function App() {
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser))
   }, [currentUser])
 
+  /* function to return a string query that will insert
+    /  the character into the db */
+  function getInsertQuery(char, userId){
+    return `INSERT INTO Characters VALUES (` +
+    `'${char.id}','${char.char_name}','${char.char_class}',${char.char_level},'${char.background}',` +
+    `${char.strength},${char.dexterity},${char.constitution},${char.inteligence},${char.wisdom},${char.charisma},` +
+    `${char.acrobatics},${char.animal_handling},${char.arcana},${char.athletics},` +
+    `${char.deception},${char.history},${char.insight},${char.intimidation},` +
+    `${char.investigation},${char.medicine},${char.nature},${char.perception},` +
+    `${char.performance},${char.persuation},${char.religion},${char.sleight_of_hand},` +
+    `${char.stealth},${char.survival},` +
+    `${char.max_hp},${char.current_hp},${char.temp_hp},` +
+    `'${char.hit_dice_type}',${char.hit_dice_count},${char.proficiency_bonus},${char.ac},` +
+    `${char.speed},${char.initiative},${char.deathsave_success},${char.deathsave_fail},` +
+    `'${char.inventory}','${char.proficiences}','${userId}')`
+  }
+
 
   async function register(username, email, password) {
     const newUser = {
@@ -122,11 +139,10 @@ export default function App() {
   function addCharacter(charName) {
     const newChar = new Character(charName)
     setCurrentUser({...currentUser,characters:[...currentUser.characters, newChar]})
-    db.addCharacter({ sql: newChar.getInsertQuery(currentUser.id) })
+    db.addCharacter({ sql: getInsertQuery(newChar,currentUser.id) })
   }
 
-  function deleteCharacter(e,id) {
-    e.preventDefault()
+  function deleteCharacter(id) {
     if (window.confirm("are you sure you want to delete this character?")) {
       // deletes actions
       characterSelected.actions.forEach(action => {
@@ -146,21 +162,21 @@ export default function App() {
 
   function updateCharacter(updatedCharacter) {
     // deletes old character and its actions and features from db
-    db.deleteCharacter(characterSelected.id)
     characterSelected.actions.forEach(action => {
       db.deleteAction({id:action.id})
     })
     characterSelected.features.forEach(feature => {
       db.deleteFeature({id:feature.id})
     })
+    db.deleteCharacter({id:characterSelected.id})
 
     // saves updated character, actions, and features to db
-    db.addCharacter(updatedCharacter.getInsertQuery(currentUser.id))
+    db.addCharacter({sql:getInsertQuery(updatedCharacter,currentUser.id)})
     updatedCharacter.actions.forEach(action => {
-      db.addAction({action:action})
+      db.addAction({action:action,charId:updatedCharacter.id})
     })
     updatedCharacter.features.forEach(feature => {
-      db.addFeature({feature:feature})
+      db.addFeature({feature:feature,charId:updatedCharacter.id})
     })
   }
 

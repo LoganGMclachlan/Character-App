@@ -75,7 +75,7 @@ app.post('/deleteUser', (req,res) => {
 
 app.post('/deleteCharacter', (req,res) => {
     const sql = `DELETE FROM characters WHERE id='${req.body.id}'`
-    const message = `Character "${req.body.name}" deleted from db`
+    const message = `Character deleted from db`
     return genericQuery(sql,message,res)
 })
 

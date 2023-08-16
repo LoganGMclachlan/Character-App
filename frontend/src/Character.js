@@ -4,7 +4,7 @@ export default class Character{
         this.id=crypto.randomUUID()
         this.char_name=name
         this.char_level=1
-        this.char_class=""
+        this.class=""
         this.background=""
         
         this.strength=0
@@ -60,22 +60,5 @@ export default class Character{
         }]
         
         this.features=[]
-    }
-
-    /* method to return a string query that will insert
-    /  the character into the db */
-    getInsertQuery(userId){
-        return `INSERT INTO Characters VALUES (` +
-        `'${this.id}','${this.char_name}','${this.char_class}',${this.char_level},'${this.background}',` +
-        `${this.strength},${this.dexterity},${this.constitution},${this.inteligence},${this.wisdom},${this.charisma},` +
-        `${this.acrobatics},${this.animal_handling},${this.arcana},${this.athletics},` +
-        `${this.deception},${this.history},${this.insight},${this.intimidation},` +
-        `${this.investigation},${this.medicine},${this.nature},${this.perception},` +
-        `${this.performance},${this.persuation},${this.religion},${this.sleight_of_hand},` +
-        `${this.stealth},${this.survival},` +
-        `${this.max_hp},${this.current_hp},${this.temp_hp},` +
-        `'${this.hit_dice_type}',${this.hit_dice_count},${this.proficiency_bonus},${this.ac},` +
-        `${this.speed},${this.initiative},${this.deathsave_success},${this.deathsave_fail},` +
-        `'${this.inventory}','${this.proficiences}','${userId}')`
     }
 }
