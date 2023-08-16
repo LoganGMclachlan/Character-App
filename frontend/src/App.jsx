@@ -183,8 +183,8 @@ export default function App() {
   function addFeature(newFeature){
     setCurrentUser({...currentUser,characters:currentUser.characters.map(char => {
       if (char.id !== characterSelected.id) return char
-      db.addFeature({feature:newFeature,userId:characterSelected.id})
-      return {...char,features:[...char.actions,newFeature]}
+      db.addFeature({feature:newFeature,charId:characterSelected.id})
+      return {...char,features:[...char.features,newFeature]}
     })})
   }
 

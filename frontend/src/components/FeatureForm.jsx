@@ -1,20 +1,24 @@
 import './styles.css'
 import { useState } from "react";
 
-export default function FeatureForm({character}){
-    const [character, setCharacter] = useState(character);
-    let temp = {id:crypto.randomUUID(), title:"", description:""};
+export default function FeatureForm({addFeature}){
+    const [title, setTitle] = useState("New Feature")
+
+    function handleNewFeature(e){
+        e.preventDefault()
+        if(title !== ""){
+            let newFeature = {id:crypto.randomUUID(),title:title,feature_description:""}
+            addFeature(newFeature)
+        }
+        else(alert("Input a feature title first"))
+    }
+
     return(
         <>
-            <h3>{character.name}</h3>
-            <h4>Level {character.level} {character.charClass}</h4>
-            <form>
-                <h2>Add Feature</h2>
-                {/*title*/}
-                <label htmlFor="title">Title:</label><br/>
-                <input type="text" value={temp.title}/>
-                onChange={(e) => temp.title = e.target.value}<br/>
-            </form>
+            <label>Title: </label>
+            <input type="text" value={title}
+            onChange={e => setTitle(e.target.value)}/>
+            <button onClick={e => handleNewFeature(e)} className='red-btn'>Add</button>
         </>
     )
 }

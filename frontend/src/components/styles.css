@@ -172,10 +172,11 @@ b{
   border-bottom: 1px grey solid;
 }
 
+
 .char-table tr td{
-  border:0px black solid;
   padding:4px;
   text-align: center;
+  width: 25%
 }
 
 .char-area{
@@ -184,7 +185,7 @@ b{
 }
 
 .char-actions{
-  margin-left:20px
+  margin-left: 20px;
 }
 
 .char-actions table{
@@ -195,4 +196,24 @@ b{
 .char-actions-heading{
   text-align: center;
   font-size: 20px;
+}
+
+.char-features{
+  vertical-align: top;
+  align-items: left;
+}
+
+.feature-title{
+  float:left;
+  border:none;
+  font-size: 20px;
+}
+
+.feature-desc{
+  width:100%;
+}
+
+.feature-btn{
+  float: left;
+  font-size: 10px;
 }

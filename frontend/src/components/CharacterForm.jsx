@@ -2,19 +2,27 @@ import './styles.css'
 import { useState } from "react";
 import ActionForm from "./ActionForm"
 import Action from "./Action"
+import Feature from './Feature'
+import FeatureForm from './FeatureForm'
 
 export default function CharacterForm({character, deleteChar, save, addAction, addFeature, deleteAction, deleteFeature}){
     const [char, setChar] = useState(character)
 
-    function addNewFeature(newFeature){
-        setChar({...char,features:[...char.features,newFeature]})
-        addFeature(newFeature)
+    function updateFeatures(updatedFeature){
+        setChar({...char,features:[...char.features.map(feature => {
+            if(feature.id !== updatedFeature.id) return feature
+            return updatedFeature
+        })]})
+    }
+
+    function removeFeature(id){
+        setChar({...char,features:[...char.features.filter(feature => feature.id !== id)]})
+        deleteFeature(id)
     }
 
     function updateActions(updatedAction){
         setChar({...char,actions:[...char.actions.map(action => {
             if(action.id !== updateActions.id) return action
-            console.log(updatedAction.id)
             return updatedAction
         })]})
     }
@@ -26,7 +34,7 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
 
     return(
         <>
-        <form className='char-form'>
+        <form>
             <div>
                 <b><input type="text" value={char.char_name} className='char-title'
                 onChange={e => setChar({...char,char_name:e.target.value})}/></b>
@@ -217,8 +225,18 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                 </li>
                 </ul>
             </td>
-            <td>
+            <td className='char-features'>
                 Features
+                <ul className='char-list'>
+                    {char.features.map(feature => {return(
+                        <Feature featureIn={feature} updateFeatures={updateFeatures} removeFeature={removeFeature} key={feature.id}/>
+                    )})}
+                    <li>
+                        <FeatureForm addFeature={newFeature => {
+                            setChar({...char,features:[...char.features,newFeature]})
+                            addFeature(newFeature)}}/>
+                    </li>
+                </ul>
             </td>
             </tr>
             </table>

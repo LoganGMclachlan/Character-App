@@ -96,7 +96,7 @@ app.post('/deleteAction', (req,res) => {
 
 app.post('/addFeature', (req,res) => {
     const sql = `INSERT INTO features VALUES ('${req.body.feature.id}',`
-                + `'${req.body.feature.title}',${req.body.feature.feature_description},`
+                + `'${req.body.feature.title}','${req.body.feature.feature_description}',`
                 + `'${req.body.charId}')`
     const message = `Feature "${req.body.feature.title}" added from db`
     return genericQuery(sql,message,res)
