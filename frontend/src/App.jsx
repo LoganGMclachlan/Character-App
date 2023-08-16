@@ -43,7 +43,7 @@ export default function App() {
     /  the character into the db */
   function getInsertQuery(char, userId){
     return `INSERT INTO Characters VALUES (` +
-    `'${char.id}','${char.char_name}','${char.char_class}',${char.char_level},'${char.background}',` +
+    `'${char.id}','${char.char_name}','${char.class}',${char.char_level},'${char.background}',` +
     `${char.strength},${char.dexterity},${char.constitution},${char.inteligence},${char.wisdom},${char.charisma},` +
     `${char.acrobatics},${char.animal_handling},${char.arcana},${char.athletics},` +
     `${char.deception},${char.history},${char.insight},${char.intimidation},` +
@@ -95,6 +95,7 @@ export default function App() {
     if (userFound !== undefined && hashPassword(password) === userFound.password_hash) {
       // fetches any characters that user might have
       userFound.characters = await db.getCharacters(userFound.id)
+      // TODO: read in char actions and features
       userFound.characters.map(char => {
         char.actions = []
         char.features = []
@@ -178,6 +179,13 @@ export default function App() {
     updatedCharacter.features.forEach(feature => {
       db.addFeature({feature:feature,charId:updatedCharacter.id})
     })
+
+    setCurrentUser({...currentUser,characters:[...currentUser.characters.map(char => {
+      if (char.id !== updatedCharacter.id) return char
+      return updatedCharacter
+    })]})
+
+    alert("Character details saved")
   }
 
   function addAction(newAction){

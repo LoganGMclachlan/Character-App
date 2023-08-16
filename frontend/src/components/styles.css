@@ -211,6 +211,9 @@ b{
 
 .feature-desc{
   width:100%;
+  font-size: 14px;
+  height:60px;
+  resize:vertical;
 }
 
 .feature-btn{
