@@ -162,7 +162,7 @@ export default function App() {
     }
   }
 
-  function updateCharacter(character) {
+  async function updateCharacter(character) {
     // deletes old character and its actions and features from db
     character.actions.forEach(action => {
       db.deleteAction({id:action.id})
@@ -170,7 +170,7 @@ export default function App() {
     character.features.forEach(feature => {
       db.deleteFeature({id:feature.id})
     })
-    db.deleteCharacter({id:character.id})
+    await db.deleteCharacter({id:character.id})// wait for character to finnish deletion to prevent duplication error
 
     // saves updated character, actions, and features to db
     db.addCharacter({sql:getInsertQuery(character,currentUser.id)})
