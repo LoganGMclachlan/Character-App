@@ -31,6 +31,22 @@ app.get('/getCharacters', (req,res) => {
     })
 })
 
+// finds and returns all actions
+app.get('/getActions', (req,res) => {
+    db.query(`SELECT * FROM actions`, (err,data) => {
+        if (err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+// finds and returns all features
+app.get('/getFeatures', (req,res) => {
+    db.query(`SELECT * FROM features`, (err,data) => {
+        if (err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.listen(8081, () => {
     console.log("listening")
 })
@@ -82,7 +98,7 @@ app.post('/deleteCharacter', (req,res) => {
 app.post('/addAction', (req,res) => {
     const sql = `INSERT INTO actions VALUES ('${req.body.action.id}',`
                 + `'${req.body.action.title}',${req.body.action.bonus_or_dc},`
-                + `'${req.body.action.action_range}',${req.body.action.damage},`
+                + `'${req.body.action.action_range}','${req.body.action.damage}',`
                 + `'${req.body.action.notes}','${req.body.charId}')`
     const message = `Action "${req.body.action.title}" added from db`
     return genericQuery(sql,message,res)
@@ -103,7 +119,7 @@ app.post('/addFeature', (req,res) => {
 })
 
 app.post('/deleteFeature', (req,res) => {
-    const sql = `DELETE FROM actions WHERE id='${req.body.id}'`
+    const sql = `DELETE FROM features WHERE id='${req.body.id}'`
     const message = `Feature deleted from db`
     return genericQuery(sql,message,res)
 })

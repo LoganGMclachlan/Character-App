@@ -85,6 +85,20 @@ class DBHandler{
     async deleteFeature(id){
         return await this.genericPost("deleteFeature",id)
     }
+
+    async getActions(){
+        return await fetch("http://localhost:8081/getActions")
+        .then(res => res.json())
+        .then(data => {console.log(data);return data})
+        .catch(err => {console.log(err)})
+    }
+
+    async getFeatures(){
+        return await fetch("http://localhost:8081/getFeatures")
+        .then(res => res.json())
+        .then(data => {console.log(data);return data})
+        .catch(err => {console.log(err)})
+    }
 }
 
 const db = Object.freeze(new DBHandler())

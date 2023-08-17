@@ -21,7 +21,7 @@ export default function Action({actionIn, updateActions, removeAction}){
             onChange={e => {setAction({...action,action_range:e.target.value}); updateActions(action)}}/></td>
             <td><input value={action.damage} className='char-dmg'
             onChange={e => {setAction({...action,damage:e.target.value}); updateActions(action)}}/></td>
-            <td><input value={action.notes} className='char-input'
+            <td><input value={action.notes} className='char-notes'
             onChange={e => {setAction({...action,notes:e.target.value}); updateActions(action)}}/></td>
             <td><button onClick={e => handleDelete(e)}>X</button></td>
         </tr>

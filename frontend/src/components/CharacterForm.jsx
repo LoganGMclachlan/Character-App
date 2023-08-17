@@ -22,7 +22,7 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
 
     function updateActions(updatedAction){
         setChar({...char,actions:[...char.actions.map(action => {
-            if(action.id !== updateActions.id) return action
+            if(action.id !== updatedAction.id) return action
             return updatedAction
         })]})
     }
@@ -49,33 +49,33 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
 
             <table className='char-table'>
             <tr>
-            <td>
+            <td className='char-cell'>
                 <ul className='char-list'>
                     <li>
                         <label>STRENGTH:</label>
                         <input type="number" value={char.strength} className='char-number'
                         onChange={e => setChar({...char,strength:e.target.value})}/>
-                    </li>
+                    </li><br/>
                     <li>
                         <label>DEXTERITY:</label>
                         <input type="number" value={char.dexterity} className='char-number'
                         onChange={e => setChar({...char,dexterity:e.target.value})}/>
-                    </li>
+                    </li><br/>
                     <li>
                         <label>CONSTITUTION:</label>
                         <input type="number" value={char.constitution} className='char-number'
                         onChange={e => setChar({...char,constitution:e.target.value})}/>
-                    </li>
+                    </li><br/>
                     <li>
                         <label>INTELLIGENCE:</label>
                         <input type="number" value={char.inteligence} className='char-number'
                         onChange={e => setChar({...char,inteligence:e.target.value})}/>
-                    </li>
+                    </li><br/>
                     <li>
                         <label>WISDOM:</label>
                         <input type="number" value={char.wisdom} className='char-number'
                         onChange={e => setChar({...char,wisdom:e.target.value})}/>
-                    </li>
+                    </li><br/>
                     <li>
                         <label>CHARISMA:</label>
                         <input type="number" value={char.charisma} className='char-number'
@@ -83,7 +83,7 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                     </li>
                 </ul>
             </td>
-            <td>
+            <td className='char-cell'>
                 HP: <input type="number" value={char.current_hp} className='char-number'
                 onChange={e => setChar({...char,current_hp:e.target.value})}/>
                 /
@@ -123,15 +123,15 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                     <option value={2}>2</option><option value={3}>3</option>
                 </select>
             </td>
-            <td>
+            <td className='char-cell'>
                 Inventory<br/>
-                <textarea value={char.inventory} className='char-area'
-                onChange={e => setChar({...char,inventory:e.target.value})}/>
+                <textarea value={char.invantory} className='char-area'
+                onChange={e => setChar({...char,invantory:e.target.value})}/>
             </td>
             </tr>
 
             <tr>
-            <td>
+            <td className='char-cell'>
                 <ul className='char-list'>
                 <li>
                     <label>Acrobatics:</label>
@@ -225,7 +225,7 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                 </li>
                 </ul>
             </td>
-            <td className='char-features'>
+            <td className='char-cell'>
                 Features
                 <ul className='char-list'>
                     {char.features.map(feature => {return(
@@ -237,6 +237,11 @@ export default function CharacterForm({character, deleteChar, save, addAction, a
                             addFeature(newFeature)}}/>
                     </li>
                 </ul>
+            </td>
+            <td className='char-cell'>
+                Proficiencies<br/>
+                <textarea value={char.proficiencies} className='char-area'
+                onChange={e => setChar({...char,proficiencies:e.target.value})}/>
             </td>
             </tr>
             </table>

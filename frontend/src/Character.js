@@ -47,8 +47,8 @@ export default class Character{
         this.deathsave_success=0
         this.deathsave_fail=0
         
-        this.inventory=""
-        this.proficiences="common,dagger"
+        this.invantory=""
+        this.proficiencies="common,dagger"
         
         this.actions=[{
             id:crypto.randomUUID,

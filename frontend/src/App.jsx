@@ -53,7 +53,7 @@ export default function App() {
     `${char.max_hp},${char.current_hp},${char.temp_hp},` +
     `'${char.hit_dice_type}',${char.hit_dice_count},${char.proficiency_bonus},${char.ac},` +
     `${char.speed},${char.initiative},${char.deathsave_success},${char.deathsave_fail},` +
-    `'${char.inventory}','${char.proficiences}','${userId}')`
+    `'${char.invantory}','${char.proficiencies}','${userId}')`
   }
 
 
@@ -95,10 +95,11 @@ export default function App() {
     if (userFound !== undefined && hashPassword(password) === userFound.password_hash) {
       // fetches any characters that user might have
       userFound.characters = await db.getCharacters(userFound.id)
-      // TODO: read in char actions and features
+      let actionsIn = await db.getActions()
+      let featuresIn = await db.getFeatures()
       userFound.characters.map(char => {
-        char.actions = []
-        char.features = []
+        char.actions = actionsIn.filter(action => action.char_id === char.id)
+        char.features = featuresIn.filter(feature => feature.char_id === char.id)
         return char
       })
       setCurrentUser(userFound)
@@ -161,28 +162,28 @@ export default function App() {
     }
   }
 
-  function updateCharacter(updatedCharacter) {
+  function updateCharacter(character) {
     // deletes old character and its actions and features from db
-    characterSelected.actions.forEach(action => {
+    character.actions.forEach(action => {
       db.deleteAction({id:action.id})
     })
-    characterSelected.features.forEach(feature => {
+    character.features.forEach(feature => {
       db.deleteFeature({id:feature.id})
     })
-    db.deleteCharacter({id:characterSelected.id})
+    db.deleteCharacter({id:character.id})
 
     // saves updated character, actions, and features to db
-    db.addCharacter({sql:getInsertQuery(updatedCharacter,currentUser.id)})
-    updatedCharacter.actions.forEach(action => {
-      db.addAction({action:action,charId:updatedCharacter.id})
+    db.addCharacter({sql:getInsertQuery(character,currentUser.id)})
+    character.actions.forEach(action => {
+      db.addAction({action:action,charId:character.id})
     })
-    updatedCharacter.features.forEach(feature => {
-      db.addFeature({feature:feature,charId:updatedCharacter.id})
+    character.features.forEach(feature => {
+      db.addFeature({feature:feature,charId:character.id})
     })
 
     setCurrentUser({...currentUser,characters:[...currentUser.characters.map(char => {
-      if (char.id !== updatedCharacter.id) return char
-      return updatedCharacter
+      if (char.id !== character.id) return char
+      return character
     })]})
 
     alert("Character details saved")

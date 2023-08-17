@@ -145,33 +145,40 @@ b{
 }
 
 .char-number{
-  max-width: 35px;
+  width: 40px;
   margin:5px;
   border:none;
   border-bottom: 1px grey solid;
+  text-align: center;
 }
 
 .char-input{
-  max-width: 140px;
+  max-width: 150px;
   margin:5px;
   border:none;
   border-bottom: 1px grey solid;
 }
 
 .char-range{
-  max-width: 85px;
+  max-width: 90px;
   margin:5px;
   border:none;
   border-bottom: 1px grey solid;
 }
 
 .char-dmg{
-  max-width: 60px;
+  max-width: 80px;
   margin:5px;
   border:none;
   border-bottom: 1px grey solid;
 }
 
+.char-notes{
+  max-width: 300px;
+  margin:5px;
+  border:none;
+  border-bottom: 1px grey solid;
+}
 
 .char-table tr td{
   padding:4px;
@@ -180,12 +187,14 @@ b{
 }
 
 .char-area{
-  height:190px;
-  width:320px
+  height:150px;
+  max-height: 300px;
+  width:320px;
+  resize:vertical;
 }
 
 .char-actions{
-  margin-left: 20px;
+  margin: 20px;
 }
 
 .char-actions table{
@@ -198,9 +207,11 @@ b{
   font-size: 20px;
 }
 
-.char-features{
+.char-cell{
   vertical-align: top;
-  align-items: left;
+  margin-top:20px;
+  border: 4px black solid;
+  padding:10px;
 }
 
 .feature-title{
