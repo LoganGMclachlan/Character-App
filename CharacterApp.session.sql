@@ -13,22 +13,32 @@ SELECT * FROM users;
 SELECT * FROM characters;
 
 -- @block
+SELECT * FROM actions;
+
+-- @block
+SELECT * FROM features;
+
+
+-- @block
 CREATE TABLE Actions(
     id VARCHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     bonus_or_dc INT NOT NULL,
     action_range VARCHAR(255) NOT NULL,
-    damage INT NOT NULL,
+    damage VARCHAR(255) NOT NULL,
     notes VARCHAR(255) NOT NULL,
     char_id VARCHAR(36) NOT NULL,
     FOREIGN KEY(char_id) REFERENCES Characters(id)
 )
 
 -- @block
+DELETE FROM Characters WHERE char_name='test00'
+
+-- @block
 CREATE TABLE FEATURES(
     id VARCHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    featurte_description TEXT NOT NULL,
+    feature_description TEXT NOT NULL,
     char_id VARCHAR(36) NOT NULL,
     FOREIGN KEY(char_id) REFERENCES Characters(id)
 )
